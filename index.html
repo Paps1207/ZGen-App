@@ -4,22 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZGen | Multi-Archetype Service Portal</title>
+    <title>ZGen Service Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <header>
+        <div class="logo">
+            <h1>ZGen Portal</h1>
+        </div>
+        <div class="role-selector">
+            <label for="role-dropdown">Active Role:</label>
+            <select id="role-dropdown">
+                <option value="Super Admin">Super Admin</option>
+                <option value="Counsellor">Counsellor</option>
+                <option value="Consultant">Consultant</option>
+                <option value="App Associate">App Associate</option>
+                <option value="Content Writer">Content Writer</option>
+                <option value="LRT Team">LRT Team</option>
+                <option value="Test Prep">Test Prep</option>
+                <option value="Student">Student</option>
+            </select>
+        </div>
+    </header>
 
-    <nav id="top-nav" style="background: var(--admin-purple); color: white; padding: 1rem;">
-        <span>ZGen System Portal</span>
-        <span id="current-role" style="float: right; opacity: 0.8;">Role: Super Admin</span>
-    </nav>
+    <main>
+        <!-- Super Admin Dashboard / Informative Cards View -->
+        <section id="dashboard-view" class="view-section">
+            <h2>Dashboard Overview</h2>
+            <div class="cards-container" id="student-cards-container">
+                <!-- Informative Cards will be populated by app.js -->
+            </div>
+        </section>
 
-    <main id="app-container" style="padding: 40px;">
-        <section id="admin-view" style="display: none;"></section>
+        <!-- Segregated Student Profile View -->
+        <section id="profile-view" class="view-section">
+            <h2>Student Profile</h2>
+            <div class="profile-container">
 
-        <section id="profile-view"></section>
+                <!-- 1. Core / Personal Data -->
+                <div class="profile-segment" id="segment-core">
+                    <div class="segment-icon">👤</div>
+                    <h3>1. Core / Personal Data</h3>
+                    <div class="segment-content">
+                        <p><strong>Name:</strong> John Doe</p>
+                        <p><strong>Email:</strong> john.doe@example.com</p>
+                        <p><strong>Phone:</strong> +1 234 567 8900</p>
+                    </div>
+                    <div class="locked-overlay">
+                        <span class="locked-icon">🔒</span>
+                        <p>Access Restricted</p>
+                    </div>
+                </div>
 
+                <!-- 2. Academic Records & Test Prep -->
+                <div class="profile-segment" id="segment-academic">
+                    <div class="segment-icon">🎓</div>
+                    <h3>2. Academic Records & Test Prep</h3>
+                    <div class="segment-content">
+                        <p><strong>GPA:</strong> 3.8/4.0</p>
+                        <p><strong>GRE:</strong> 320</p>
+                        <p><strong>IELTS:</strong> 7.5</p>
+                    </div>
+                    <div class="locked-overlay">
+                        <span class="locked-icon">🔒</span>
+                        <p>Access Restricted</p>
+                    </div>
+                </div>
+
+                <!-- 3. SOP/LOR/Document Creative -->
+                <div class="profile-segment" id="segment-sop">
+                    <div class="segment-icon">📄</div>
+                    <h3>3. SOP / LOR / Creative</h3>
+                    <div class="segment-content">
+                        <p><strong>SOP Status:</strong> Drafting</p>
+                        <p><strong>LORs:</strong> 2/3 Received</p>
+                        <p><strong>Essays:</strong> In Review</p>
+                    </div>
+                    <div class="locked-overlay">
+                        <span class="locked-icon">🔒</span>
+                        <p>Access Restricted</p>
+                    </div>
+                </div>
+
+                <!-- 4. University Application Status -->
+                <div class="profile-segment" id="segment-application">
+                    <div class="segment-icon">🏛️</div>
+                    <h3>4. University Application Status</h3>
+                    <div class="segment-content">
+                        <p><strong>Universities:</strong> Stanford, MIT, Berkeley</p>
+                        <p><strong>Status:</strong> Submitted</p>
+                        <p><strong>Decisions:</strong> Pending</p>
+                    </div>
+                    <div class="locked-overlay">
+                        <span class="locked-icon">🔒</span>
+                        <p>Access Restricted</p>
+                    </div>
+                </div>
+
+                <!-- 5. LRT (Finance, Remittance, Visa) -->
+                <div class="profile-segment" id="segment-lrt">
+                    <div class="segment-icon">✈️</div>
+                    <h3>5. LRT (Finance, Visa, Transport)</h3>
+                    <div class="segment-content">
+                        <p><strong>Loan Status:</strong> Approved</p>
+                        <p><strong>Visa Status:</strong> Interview Scheduled</p>
+                        <p><strong>Flights:</strong> Not Booked</p>
+                    </div>
+                    <div class="locked-overlay">
+                        <span class="locked-icon">🔒</span>
+                        <p>Access Restricted</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
     </main>
 
     <script src="app.js"></script>
