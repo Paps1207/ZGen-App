@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Counselor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ─────────────────────────────────────────────
+           Design Tokens
+        ───────────────────────────────────────────── */
+        :root {
+            --zgen-green:       #1B4332;
+            --zgen-green-deep:  #081c15;
+            --zgen-green-mid:   #2d6a4f;
+            --zgen-green-light: #40916c;
+            --zgen-gold:        #D4AF37;
+            --zgen-gold-light:  #eedd82;
+            --zgen-gold-dim:    #a68a2a;
+            --surface:          #f5f7f5;
+            --surface-card:     #ffffff;
+            --text-primary:     #1a1a2e;
+            --text-secondary:   #555b6e;
+            --text-muted:       #8d93a5;
+            --border:           #e2e6ea;
+            --turquoise:        #40E0D0;
+            --orange-urgent:    #FF8C00;
+            --red-danger:       #e63946;
+            --radius-sm:        8px;
+            --radius-md:        12px;
+            --radius-lg:        20px;
+            --shadow-sm:        0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md:        0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg:        0 12px 32px rgba(0,0,0,0.10);
+            --transition:       all 0.25s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ─────────────────────────────────────────────
+           Reset & Base
+        ───────────────────────────────────────────── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 15px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--surface);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─────────────────────────────────────────────
+           Sidebar
+        ───────────────────────────────────────────── */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--zgen-green);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-brand h2 {
+            color: var(--zgen-gold);
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-brand span {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1.5rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .sidebar-nav a.active {
+            color: var(--zgen-gold);
+            background: rgba(212,175,55,0.08);
+            border-left-color: var(--zgen-gold);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+
+        .sidebar-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-footer a {
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-footer a:hover { color: var(--zgen-gold); }
+
+        /* ─────────────────────────────────────────────
+           Main Content
+        ───────────────────────────────────────────── */
+        .main {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2.5rem 3rem;
+        }
+
+        /* Top Bar */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+
+        .topbar h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .topbar h1 small {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--zgen-green);
+            color: var(--zgen-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ─────────────────────────────────────────────
+           Grid Layout
+        ───────────────────────────────────────────── */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* ─────────────────────────────────────────────
+           Cards – Shared
+        ───────────────────────────────────────────── */
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-header .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(27,67,50,0.08);
+            color: var(--zgen-green);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* ─────────────────────────────────────────────
+           Lead List
+        ───────────────────────────────────────────── */
+        .lead-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lead-item:last-child { border-bottom: none; }
+
+        .lead-item:hover { background: rgba(27,67,50,0.02); margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+
+        .lead-item.selected {
+            background: rgba(212,175,55,0.06);
+            margin: 0 -1.5rem;
+            padding-left: calc(1.5rem - 3px);
+            padding-right: 1.5rem;
+            border-left: 3px solid var(--zgen-gold);
+            border-radius: 0;
+        }
+
+        .lead-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .lead-info { flex: 1; min-width: 0; }
+
+        .lead-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .lead-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .lead-status {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .lead-status.new          { background: #e0f7fa; color: #00838f; }
+        .lead-status.doc-verify   { background: #fff3e0; color: #e65100; }
+        .lead-status.in-progress  { background: #e8f5e9; color: #2e7d32; }
+        .lead-status.enrolled     { background: rgba(212,175,55,0.12); color: var(--zgen-gold-dim); }
+
+        /* ─────────────────────────────────────────────
+           Student Academic Card
+        ───────────────────────────────────────────── */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: white;
+            background: linear-gradient(135deg, var(--zgen-green) 0%, var(--zgen-green-mid) 100%);
+        }
+
+        .profile-meta h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .profile-meta p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .profile-meta .id-tag {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(27,67,50,0.06);
+            color: var(--zgen-green);
+            letter-spacing: 0.5px;
+        }
+
+        /* Data Sections */
+        .data-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .data-section:last-child { margin-bottom: 0; }
+
+        .data-section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 0.85rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.55rem 0;
+        }
+
+        .data-row .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .data-row .value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Score Chips */
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .score-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .score-chip:hover {
+            border-color: var(--zgen-gold);
+            box-shadow: 0 0 0 2px rgba(212,175,55,0.1);
+        }
+
+        .score-chip .exam-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .score-chip .exam-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--zgen-green);
+        }
+
+        .score-chip .exam-score.pending {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .score-chip .exam-status {
+            font-size: 0.65rem;
+            margin-top: 4px;
+            color: var(--turquoise);
+            font-weight: 600;
+        }
+
+        .score-chip .exam-status.not-taken {
+            color: var(--text-muted);
+        }
+
+        /* Payment Row */
+        .payment-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border-radius: var(--radius-sm);
+            margin-top: 0.5rem;
+        }
+
+        .payment-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .payment-badge.success { background: #e8f5e9; color: #2e7d32; }
+        .payment-badge.pending { background: #fff3e0; color: #e65100; }
+        .payment-badge.failed  { background: #fce4ec; color: #c62828; }
+
+        /* ─────────────────────────────────────────────
+           Action Controls
+        ───────────────────────────────────────────── */
+        .action-bar {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.7rem 1.25rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
+            color: var(--zgen-green-deep);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px -6px rgba(212,175,55,0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--zgen-green);
+            color: var(--zgen-green);
+            background: rgba(27,67,50,0.03);
+        }
+
+        .btn-green {
+            background: var(--zgen-green);
+            color: white;
+        }
+
+        .btn-green:hover {
+            background: var(--zgen-green-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px -6px rgba(27,67,50,0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn .btn-icon { font-size: 1rem; }
+
+        /* Tooltip for disabled button */
+        .btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-wrapper .tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .btn-wrapper .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text-primary);
+        }
+
+        .btn-wrapper:hover .tooltip {
+            display: block;
+        }
+
+        /* ─────────────────────────────────────────────
+           Empty / Placeholder State
+        ───────────────────────────────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.35;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* ─────────────────────────────────────────────
+           Toast    
+        ───────────────────────────────────────────── */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--zgen-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.35s ease, fadeOut 0.35s ease 2.5s forwards;
+            max-width: 380px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to   { transform: translateX(0);    opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to   { opacity: 0; transform: translateY(10px); }
+        }
+
+        /* ─────────────────────────────────────────────
+           Responsive
+        ───────────────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 1.5rem; }
+            .score-grid { grid-template-columns: 1fr; }
+            .action-bar { flex-direction: column; }
+            .action-bar .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Sidebar 
+    ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>Counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="active">
+                <span class="nav-icon">📋</span> Lead Pipeline
+            </a>
+            <a href="#">
+                <span class="nav-icon">👤</span> Student Profiles
+            </a>
+            <a href="#">
+                <span class="nav-icon">📄</span> Documents
+            </a>
+            <a href="#">
+                <span class="nav-icon">📊</span> Reports
+            </a>
+            <a href="#">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         Main Content 
+    ═══════════════════════════════════════════ -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <h1>
+                Lead Pipeline
+                <small>Manage your assigned student leads</small>
+            </h1>
+            <div class="topbar-actions">
+                <div class="avatar">CN</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+
+            <!-- ── Left: Lead List ────────────── -->
+            <div class="card" id="leadListCard">
+                <div class="card-header">
+                    <h3>Assigned Leads</h3>
+                    <span class="badge" id="leadCount">0 Leads</span>
+                </div>
+                <div class="card-body" id="leadListBody">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- ── Right: Student Academic Card ─ -->
+            <div class="card" id="studentCard">
+                <div class="card-header">
+                    <h3>Student Academic Card</h3>
+                </div>
+                <div class="card-body" id="studentCardBody">
+                    <div class="empty-state">
+                        <div class="empty-icon">👈</div>
+                        <p>Select a lead from the pipeline to view their profile.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════
+         Scripts
+    ═══════════════════════════════════════════ -->
+    <script src="./app.js"></script>
+</body>
+</html>

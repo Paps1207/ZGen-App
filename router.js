@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "admin.html";
                     break;
                 case "counselor":
+                    window.location.href = "counselor.html";
+                    break;
                 case "consultant":
                 case "app_associate":
                 case "content_writer":
