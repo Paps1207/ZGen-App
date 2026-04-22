@@ -1,0 +1,64 @@
+/* ZGen Master Design System */
+:root {
+    --super-admin: #2C3E50;
+    --admin-purple: #4B0082;
+    --success-turquoise: #40E0D0;
+    --alert-orange: #FF8C00;
+    --silent-grey: #F4F7F6;
+    --matte-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--silent-grey);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: #333;
+}
+
+/* 6-Phase Horizontal Flow Container */
+.workflow-tracker {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--matte-shadow);
+}
+
+/* Segregated Profile Sections */
+.profile-segment {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--admin-purple);
+    transition: all 0.3s ease;
+}
+
+/* Locked/Invisible State for RBAC */
+.segment-locked {
+    opacity: 0.3;
+    filter: grayscale(1);
+    pointer-events: none;
+    user-select: none;
+    position: relative;
+}
+
+/* Informative Card (Summary View) */
+.summary-card {
+    width: 300px;
+    padding: 15px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border-radius: 20px;
+    box-shadow: var(--matte-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Matte 3D Aesthetic for Icons */
+.matte-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--admin-purple);
+    border-radius: 10px;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
+}
