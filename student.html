@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Student Portal</title>
+    <style>
+        :root {
+            --zgen-green: #1B4332;
+            --zgen-gold: #D4AF37;
+            --zgen-dark: #081c15;
+            --zgen-light: #f8f9fa;
+        }
+        body {
+            background-color: var(--zgen-green);
+            color: var(--zgen-light);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            max-width: 600px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        h1 { color: var(--zgen-gold); margin-bottom: 1rem; }
+        p { color: #a3b18a; line-height: 1.6; margin-bottom: 2rem; }
+        .success-icon { font-size: 4rem; color: #40E0D0; margin-bottom: 1rem; }
+        .back-link { color: var(--zgen-gold); text-decoration: none; font-weight: 600; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <h1>Welcome, Student</h1>
+        <p>Your educational journey begins here. You have successfully authenticated into the ZGen Gateway.</p>
+        <a href="login.html" class="back-link">← Return to Login</a>
+    </div>
+</body>
+</html>
