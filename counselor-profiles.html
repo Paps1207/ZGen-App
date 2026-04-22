@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Student Profiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ─────────────────────────────────────────────
+           Design Tokens (shared with counselor.html)
+        ───────────────────────────────────────────── */
+        :root {
+            --zgen-green:       #1B4332;
+            --zgen-green-deep:  #081c15;
+            --zgen-green-mid:   #2d6a4f;
+            --zgen-green-light: #40916c;
+            --zgen-gold:        #D4AF37;
+            --zgen-gold-light:  #eedd82;
+            --zgen-gold-dim:    #a68a2a;
+            --surface:          #f5f7f5;
+            --surface-card:     #ffffff;
+            --text-primary:     #1a1a2e;
+            --text-secondary:   #555b6e;
+            --text-muted:       #8d93a5;
+            --border:           #e2e6ea;
+            --turquoise:        #40E0D0;
+            --orange-urgent:    #FF8C00;
+            --red-danger:       #e63946;
+            --radius-sm:        8px;
+            --radius-md:        12px;
+            --radius-lg:        20px;
+            --shadow-sm:        0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md:        0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg:        0 12px 32px rgba(0,0,0,0.10);
+            --transition:       all 0.25s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ─────────────────────────────────────────────
+           Reset & Base
+        ───────────────────────────────────────────── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 15px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--surface);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─────────────────────────────────────────────
+           Sidebar (identical to counselor.html)
+        ───────────────────────────────────────────── */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--zgen-green);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; z-index: 100;
+        }
+        .sidebar-brand { padding: 2rem 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-brand h2 { color: var(--zgen-gold); font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
+        .sidebar-brand span { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px; text-transform: uppercase; letter-spacing: 1.5px; }
+        .sidebar-nav { flex: 1; padding: 1.5rem 0; }
+        .sidebar-nav a { display: flex; align-items: center; gap: 12px; padding: 0.85rem 1.5rem; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: var(--transition); border-left: 3px solid transparent; }
+        .sidebar-nav a:hover { color: white; background: rgba(255,255,255,0.05); }
+        .sidebar-nav a.active { color: var(--zgen-gold); background: rgba(212,175,55,0.08); border-left-color: var(--zgen-gold); }
+        .sidebar-nav a .nav-icon { width: 20px; text-align: center; font-size: 1.05rem; }
+        .sidebar-footer { padding: 1.25rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.8rem; transition: var(--transition); }
+        .sidebar-footer a:hover { color: var(--zgen-gold); }
+
+        /* ─────────────────────────────────────────────
+           Main Content
+        ───────────────────────────────────────────── */
+        .main {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2.5rem 3rem;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .topbar h1 { font-size: 1.6rem; font-weight: 700; }
+        .topbar h1 small { display: block; font-size: 0.8rem; font-weight: 400; color: var(--text-muted); margin-top: 4px; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--zgen-green); color: var(--zgen-gold); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+
+        /* ─────────────────────────────────────────────
+           Search & Filter Bar
+        ───────────────────────────────────────────── */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 240px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: var(--surface-card);
+            color: var(--text-primary);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--zgen-gold);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+        }
+
+        .search-box input::placeholder { color: var(--text-muted); }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        /* Filter pills */
+        .filter-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .filter-pill {
+            padding: 0.55rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface-card);
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-pill:hover {
+            border-color: var(--zgen-green-light);
+            color: var(--zgen-green);
+        }
+
+        .filter-pill.active {
+            background: linear-gradient(135deg, var(--zgen-gold), var(--zgen-gold-dim));
+            color: var(--zgen-green-deep);
+            border-color: var(--zgen-gold);
+            font-weight: 600;
+        }
+
+        .result-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* ─────────────────────────────────────────────
+           Profile Table
+        ───────────────────────────────────────────── */
+        .profile-table {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 2.5fr 1.2fr 0.9fr 0.9fr 0.9fr 50px;
+            padding: 0.9rem 1.5rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table-row {
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .table-row:last-child { border-bottom: none; }
+
+        .row-summary {
+            display: grid;
+            grid-template-columns: 2.5fr 1.2fr 0.9fr 0.9fr 0.9fr 50px;
+            padding: 1rem 1.5rem;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .row-summary:hover {
+            background: rgba(27,67,50,0.015);
+        }
+
+        .table-row.expanded .row-summary {
+            background: rgba(212,175,55,0.04);
+            border-left: 3px solid var(--zgen-gold);
+            padding-left: calc(1.5rem - 3px);
+        }
+
+        /* Student name cell */
+        .cell-student {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cell-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .cell-name { font-weight: 600; font-size: 0.9rem; }
+        .cell-id   { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* Other cells */
+        .cell { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .cell-score {
+            font-weight: 600;
+            color: var(--zgen-green);
+            font-size: 0.85rem;
+        }
+
+        .cell-score.none {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .status-badge.new          { background: #e0f7fa; color: #00838f; }
+        .status-badge.doc-verify   { background: #fff3e0; color: #e65100; }
+        .status-badge.in-progress  { background: #e8f5e9; color: #2e7d32; }
+        .status-badge.enrolled     { background: rgba(212,175,55,0.12); color: var(--zgen-gold-dim); }
+        .status-badge.archived     { background: #eeeeee; color: #757575; }
+        .status-badge.flagged      { background: #fce4ec; color: #c62828; }
+
+        /* Expand chevron */
+        .expand-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: transform 0.25s ease;
+        }
+
+        .table-row.expanded .expand-toggle { transform: rotate(180deg); color: var(--zgen-gold); }
+
+        /* ─────────────────────────────────────────────
+           Expanded Detail Panel
+        ───────────────────────────────────────────── */
+        .row-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.35s ease;
+            background: var(--surface);
+            border-top: 1px solid transparent;
+        }
+
+        .table-row.expanded .row-detail {
+            max-height: 600px;
+            border-top-color: var(--border);
+        }
+
+        .detail-inner {
+            padding: 1.75rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .detail-section-title {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.45rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            font-size: 0.82rem;
+        }
+
+        .detail-row .label { color: var(--text-muted); }
+        .detail-row .value { font-weight: 600; color: var(--text-primary); text-align: right; max-width: 60%; }
+
+        /* Score chips in detail view */
+        .detail-scores {
+            display: flex;
+            gap: 10px;
+            margin-top: 0.25rem;
+        }
+
+        .detail-score-chip {
+            flex: 1;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .detail-score-chip:hover {
+            border-color: var(--zgen-gold);
+            box-shadow: 0 0 0 2px rgba(212,175,55,0.08);
+        }
+
+        .detail-score-chip .exam-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+
+        .detail-score-chip .exam-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--zgen-green);
+        }
+
+        .detail-score-chip .exam-value.none {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Action bar inside detail */
+        .detail-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ─────────────────────────────────────────────
+           Buttons (shared system)
+        ───────────────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.15rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .btn .btn-icon { font-size: 0.95rem; }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
+            color: var(--zgen-green-deep);
+        }
+        .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -6px rgba(212,175,55,0.5); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover { border-color: var(--zgen-green); color: var(--zgen-green); background: rgba(27,67,50,0.03); }
+
+        .btn-danger-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .btn-danger-outline:hover { border-color: var(--red-danger); color: var(--red-danger); background: rgba(230,57,70,0.04); }
+
+        .btn-muted-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+        .btn-muted-outline:hover { border-color: #999; color: #666; background: rgba(0,0,0,0.02); }
+
+        .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+        /* ─────────────────────────────────────────────
+           Toast
+        ───────────────────────────────────────────── */
+        .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background: var(--zgen-green); color: white; padding: 1rem 1.5rem; border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg); font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;
+            animation: slideIn 0.35s ease, fadeOut 0.35s ease 2.5s forwards; max-width: 400px;
+        }
+        .toast.warn { background: var(--orange-urgent); }
+        .toast.danger { background: var(--red-danger); }
+
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(10px); } }
+
+        /* ─────────────────────────────────────────────
+           Empty state
+        ───────────────────────────────────────────── */
+        .empty-table {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .empty-table .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.3; }
+        .empty-table p { font-size: 0.9rem; }
+
+        /* ─────────────────────────────────────────────
+           Responsive
+        ───────────────────────────────────────────── */
+        @media (max-width: 1100px) {
+            .detail-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 1.5rem; }
+            .table-header { display: none; }
+            .row-summary { grid-template-columns: 1fr auto; gap: 8px; }
+            .row-summary .cell:nth-child(n+3) { display: none; }
+            .detail-inner { grid-template-columns: 1fr; }
+            .detail-actions { flex-direction: column; }
+            .detail-actions .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Sidebar
+    ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>Counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html">
+                <span class="nav-icon">📋</span> Lead Pipeline
+            </a>
+            <a href="counselor-profiles.html" class="active">
+                <span class="nav-icon">👤</span> Student Profiles
+            </a>
+            <a href="counselor-docs.html">
+                <span class="nav-icon">📄</span> Documents
+            </a>
+            <a href="#">
+                <span class="nav-icon">📊</span> Reports
+            </a>
+            <a href="#">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         Main Content
+    ═══════════════════════════════════════════ -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <h1>
+                Student Profiles
+                <small>Search, review, and manage student academic records</small>
+            </h1>
+            <div class="avatar">CN</div>
+        </div>
+
+        <!-- Toolbar: Search + Filters -->
+        <div class="toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="profileSearch" placeholder="Search by name, ID, or nationality…">
+            </div>
+            <div class="filter-group" id="filterGroup">
+                <button class="filter-pill active" data-filter="all">All</button>
+                <button class="filter-pill" data-filter="new">New</button>
+                <button class="filter-pill" data-filter="doc-verify">Doc Verify</button>
+                <button class="filter-pill" data-filter="in-progress">In Progress</button>
+                <button class="filter-pill" data-filter="enrolled">Enrolled</button>
+                <button class="filter-pill" data-filter="flagged">Flagged</button>
+                <button class="filter-pill" data-filter="archived">Archived</button>
+            </div>
+            <span class="result-count" id="resultCount"></span>
+        </div>
+
+        <!-- Profile Table -->
+        <div class="profile-table" id="profileTable">
+            <div class="table-header">
+                <span>Student</span>
+                <span>Education</span>
+                <span>GRE</span>
+                <span>IELTS</span>
+                <span>Status</span>
+                <span></span>
+            </div>
+            <div id="tableBody">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════
+         Script — Student Profiles Module
+    ═══════════════════════════════════════════ -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ── Mock Data (mirrors & extends counselor leads) ──────────
+        const avatarColors = ['#1B4332','#2d6a4f','#40916c','#D4AF37','#a68a2a','#4B0082','#00838f','#e65100'];
+
+        const students = [
+            {
+                id: 'STU-1001', name: 'Riya Sharma', nationality: 'Indian',
+                email: 'riya.sharma@mail.com', phone: '+91 98765 43210',
+                education: 'B.Tech CS – VIT Vellore (2023)',
+                educationFull: 'B.Tech Computer Science – VIT Vellore (2023)',
+                workExp: '1 year – TCS Digital',
+                targets: 'USA, Canada', budget: '₹35L', intake: 'Fall 2026',
+                gre: 318, ielts: 7.5, toefl: null,
+                status: 'new', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1002', name: 'Arjun Mehta', nationality: 'Indian',
+                email: 'arjun.m@mail.com', phone: '+91 87654 32109',
+                education: 'B.Com Hons – SRCC (2022)',
+                educationFull: 'B.Com Honours – SRCC Delhi (2022)',
+                workExp: '2 years – Deloitte',
+                targets: 'UK, Ireland', budget: '₹28L', intake: 'Spring 2027',
+                gre: null, ielts: 8.0, toefl: 105,
+                status: 'doc-verify', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1003', name: 'Sara Al-Farsi', nationality: 'Omani',
+                email: 'sara.alfarsi@mail.com', phone: '+968 9123 4567',
+                education: 'BSc Biology – SQU (2024)',
+                educationFull: 'BSc Biology – Sultan Qaboos University (2024)',
+                workExp: 'Fresher',
+                targets: 'Australia', budget: '$45K AUD', intake: 'Fall 2026',
+                gre: 310, ielts: null, toefl: 98,
+                status: 'new', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1004', name: 'Liam O\'Brien', nationality: 'Irish',
+                email: 'liam.ob@mail.com', phone: '+353 85 123 4567',
+                education: 'BA Econ – Trinity College (2023)',
+                educationFull: 'BA Economics – Trinity College Dublin (2023)',
+                workExp: '1 year – KPMG',
+                targets: 'USA', budget: '€40K', intake: 'Fall 2026',
+                gre: 325, ielts: 8.5, toefl: 112,
+                status: 'in-progress', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1005', name: 'Meera Patel', nationality: 'Indian',
+                email: 'meera.p@mail.com', phone: '+91 99887 76655',
+                education: 'B.Arch – CEPT (2024)',
+                educationFull: 'B.Arch – CEPT Ahmedabad (2024)',
+                workExp: 'Fresher',
+                targets: 'Germany, Netherlands', budget: '₹18L', intake: 'Winter 2026',
+                gre: null, ielts: 6.5, toefl: null,
+                status: 'enrolled', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1006', name: 'Anika Desai', nationality: 'Indian',
+                email: 'anika.d@mail.com', phone: '+91 91234 56789',
+                education: 'B.Sc Statistics – ISI (2023)',
+                educationFull: 'B.Sc Statistics – Indian Statistical Institute (2023)',
+                workExp: '1 year – Goldman Sachs',
+                targets: 'USA, UK', budget: '₹50L', intake: 'Fall 2026',
+                gre: 332, ielts: 8.0, toefl: 115,
+                status: 'in-progress', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1007', name: 'Tomás García', nationality: 'Mexican',
+                email: 'tomas.g@mail.com', phone: '+52 55 1234 5678',
+                education: 'Ing. Industrial – ITESM (2024)',
+                educationFull: 'Ingeniería Industrial – ITESM Monterrey (2024)',
+                workExp: 'Fresher',
+                targets: 'Canada, Germany', budget: '$30K USD', intake: 'Fall 2026',
+                gre: 305, ielts: 7.0, toefl: null,
+                status: 'new', flagged: false, archived: false
+            },
+            {
+                id: 'STU-1008', name: 'Priya Nair', nationality: 'Indian',
+                email: 'priya.n@mail.com', phone: '+91 98111 22233',
+                education: 'MBBS – JIPMER (2022)',
+                educationFull: 'MBBS – JIPMER Puducherry (2022)',
+                workExp: '2 years – Apollo Hospitals',
+                targets: 'UK, Australia', budget: '₹60L', intake: 'Spring 2027',
+                gre: null, ielts: 7.5, toefl: 102,
+                status: 'doc-verify', flagged: false, archived: false
+            }
+        ];
+
+        let expandedId = null;
+        let activeFilter = 'all';
+        let searchQuery = '';
+
+        const tableBody = document.getElementById('tableBody');
+        const resultCount = document.getElementById('resultCount');
+
+        // ── Status label helper ──────────
+        const statusLabel = (s) => ({
+            'new': 'New', 'doc-verify': 'Doc Verify',
+            'in-progress': 'In Progress', 'enrolled': 'Enrolled',
+            'archived': 'Archived', 'flagged': 'Flagged'
+        }[s] || s);
+
+        // ── Get effective status ──────────
+        function effectiveStatus(s) {
+            if (s.archived) return 'archived';
+            if (s.flagged) return 'flagged';
+            return s.status;
+        }
+
+        // ── Filter students ──────────
+        function getFiltered() {
+            return students.filter(s => {
+                // Filter
+                if (activeFilter !== 'all') {
+                    const eff = effectiveStatus(s);
+                    if (eff !== activeFilter) return false;
+                }
+                // Search
+                if (searchQuery) {
+                    const q = searchQuery.toLowerCase();
+                    return s.name.toLowerCase().includes(q) ||
+                           s.id.toLowerCase().includes(q) ||
+                           s.nationality.toLowerCase().includes(q) ||
+                           s.email.toLowerCase().includes(q);
+                }
+                return true;
+            });
+        }
+
+        // ── Render table ──────────
+        function render() {
+            const filtered = getFiltered();
+            resultCount.textContent = `${filtered.length} of ${students.length} profiles`;
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = `<div class="empty-table"><div class="empty-icon">🔎</div><p>No profiles match your search or filter.</p></div>`;
+                return;
+            }
+
+            tableBody.innerHTML = '';
+            filtered.forEach((s, i) => {
+                const initials = s.name.split(' ').map(w => w[0]).join('');
+                const color = avatarColors[i % avatarColors.length];
+                const isExpanded = expandedId === s.id;
+                const eff = effectiveStatus(s);
+
+                const row = document.createElement('div');
+                row.className = 'table-row' + (isExpanded ? ' expanded' : '');
+                row.dataset.id = s.id;
+
+                row.innerHTML = `
+                    <div class="row-summary">
+                        <div class="cell cell-student">
+                            <div class="cell-avatar" style="background:${color}">${initials}</div>
+                            <div>
+                                <div class="cell-name">${s.name}</div>
+                                <div class="cell-id">${s.id} · ${s.nationality}</div>
+                            </div>
+                        </div>
+                        <div class="cell">${s.education}</div>
+                        <div class="cell-score ${s.gre == null ? 'none' : ''}">${s.gre != null ? s.gre : '—'}</div>
+                        <div class="cell-score ${s.ielts == null ? 'none' : ''}">${s.ielts != null ? s.ielts : '—'}</div>
+                        <div class="cell"><span class="status-badge ${eff}">${statusLabel(eff)}</span></div>
+                        <div class="expand-toggle">▼</div>
+                    </div>
+                    <div class="row-detail">
+                        <div class="detail-inner">
+                            <div class="detail-section">
+                                <div class="detail-section-title">Academic Profile</div>
+                                <div class="detail-row"><span class="label">Education</span><span class="value">${s.educationFull}</span></div>
+                                <div class="detail-row"><span class="label">Work Exp</span><span class="value">${s.workExp}</span></div>
+                                <div class="detail-row"><span class="label">Email</span><span class="value">${s.email}</span></div>
+                                <div class="detail-row"><span class="label">Phone</span><span class="value">${s.phone}</span></div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-section-title">Test Scores</div>
+                                <div class="detail-scores">
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">GRE</div>
+                                        <div class="exam-value ${s.gre == null ? 'none' : ''}">${s.gre != null ? s.gre : 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">IELTS</div>
+                                        <div class="exam-value ${s.ielts == null ? 'none' : ''}">${s.ielts != null ? s.ielts : 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">TOEFL</div>
+                                        <div class="exam-value ${s.toefl == null ? 'none' : ''}">${s.toefl != null ? s.toefl : 'N/A'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-section-title">Preferences</div>
+                                <div class="detail-row"><span class="label">Targets</span><span class="value">${s.targets}</span></div>
+                                <div class="detail-row"><span class="label">Budget</span><span class="value">${s.budget}</span></div>
+                                <div class="detail-row"><span class="label">Intake</span><span class="value">${s.intake}</span></div>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="btn btn-gold" data-action="edit" data-id="${s.id}">
+                                    <span class="btn-icon">✎</span> Edit Profile
+                                </button>
+                                <button class="btn btn-danger-outline" data-action="flag" data-id="${s.id}" ${s.flagged ? 'disabled' : ''}>
+                                    <span class="btn-icon">⚑</span> ${s.flagged ? 'Flagged' : 'Flag for Review'}
+                                </button>
+                                <button class="btn btn-muted-outline" data-action="archive" data-id="${s.id}" ${s.archived ? 'disabled' : ''}>
+                                    <span class="btn-icon">📦</span> ${s.archived ? 'Archived' : 'Archive Lead'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Toggle expand
+                row.querySelector('.row-summary').addEventListener('click', () => {
+                    expandedId = expandedId === s.id ? null : s.id;
+                    render();
+                });
+
+                // Action buttons
+                row.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        handleAction(btn.dataset.action, btn.dataset.id);
+                    });
+                });
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // ── Handle actions ──────────
+        function handleAction(action, id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            switch (action) {
+                case 'edit':
+                    showToast(`✎ Editing profile for ${student.name}`, 'default');
+                    break;
+                case 'flag':
+                    student.flagged = true;
+                    showToast(`⚑ ${student.name} flagged for review`, 'warn');
+                    render();
+                    break;
+                case 'archive':
+                    student.archived = true;
+                    showToast(`📦 ${student.name} archived`, 'default');
+                    render();
+                    break;
+            }
+        }
+
+        // ── Search ──────────
+        document.getElementById('profileSearch').addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            render();
+        });
+
+        // ── Filter pills ──────────
+        document.getElementById('filterGroup').addEventListener('click', (e) => {
+            if (!e.target.classList.contains('filter-pill')) return;
+            activeFilter = e.target.dataset.filter;
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            e.target.classList.add('active');
+            render();
+        });
+
+        // ── Toast ──────────
+        function showToast(message, type = 'default') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast' + (type === 'warn' ? ' warn' : type === 'danger' ? ' danger' : '');
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ── Initial render ──────────
+        render();
+    });
+    </script>
+</body>
+</html>
