@@ -1,4 +1,43 @@
-/* GENERATED CSS: Unified tokens and components */
+
+:root {
+    /* Brand Colors */
+    --zgen-green: #1B4332;
+    --zgen-green-deep: #081c15;
+    --zgen-green-mid: #2d6a4f;
+    --zgen-green-light: #40916c;
+    
+    --zgen-gold: #FF8C00; /* Reusing legacy var for orange */
+    --zgen-gold-light: #FFA500;
+    --zgen-gold-dim: #e67e22;
+    
+    --orange-urgent: #FF8C00;
+    --turquoise: #40E0D0;
+    --red-danger: #e63946;
+
+    /* SURFACES */
+    --surface: #f8f9fa; /* Soft off-white */
+    --surface-card: #ffffff;
+    
+    /* TEXT */
+    --text-primary: #000000; /* High contrast black */
+    --text-secondary: #222222;
+    --text-muted: #555555;
+    --border: #e2e6ea;
+
+    /* RADIUS (PILL DESIGN) */
+    --radius-sm: 999px;
+    --radius-md: 999px; 
+    --radius-lg: 24px;
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+    --transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+}
+
+
+
 
 
 :root {
@@ -7,29 +46,29 @@
     --zgen-green-deep: #081c15;
     --zgen-green-mid: #2d6a4f;
     --zgen-green-light: #40916c;
-    /* NEW COLORS */
-    --zgen-gold: #000000; /* Solid Black */
-    --zgen-gold-light: #333333;
-    --zgen-gold-dim: #1a1a1a;
     
-    --orange-urgent: #FF6B00; /* Vibrant Orange */
+    --zgen-gold: #FF8C00; /* Reusing legacy var for orange */
+    --zgen-gold-light: #FFA500;
+    --zgen-gold-dim: #e67e22;
+    
+    --orange-urgent: #FF8C00;
     --turquoise: #40E0D0;
     --red-danger: #e63946;
 
     /* SURFACES */
-    --surface: #f9fafb; /* Light Grey / Off-white */
+    --surface: #f8f9fa; /* Soft off-white */
     --surface-card: #ffffff;
     
     /* TEXT */
-    --text-primary: #111827;
-    --text-secondary: #4b5563;
-    --text-muted: #9ca3af;
+    --text-primary: #000000; /* High contrast black */
+    --text-secondary: #222222;
+    --text-muted: #555555;
     --border: #e2e6ea;
 
     /* RADIUS (PILL DESIGN) */
-    --radius-sm: 50px;
-    --radius-md: 50px; 
-    --radius-lg: 28px; /* Large rounded corners for main dashboard cards */
+    --radius-sm: 999px;
+    --radius-md: 999px; 
+    --radius-lg: 24px;
 
     /* SHADOWS */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -37,6 +76,7 @@
     --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
     --transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
 }
+
 
 
 /* CSS from counselor-reports.html */
