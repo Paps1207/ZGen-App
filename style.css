@@ -1,40 +1,44 @@
 
-:root {
-    /* Brand Colors */
-    --zgen-green: #1B4332;
-    --zgen-green-deep: #081c15;
-    --zgen-green-mid: #2d6a4f;
-    --zgen-green-light: #40916c;
-    
-    --zgen-gold: #FF8C00; /* Reusing legacy var for orange */
-    --zgen-gold-light: #FFA500;
-    --zgen-gold-dim: #e67e22;
-    
-    --orange-urgent: #FF8C00;
-    --turquoise: #40E0D0;
-    --red-danger: #e63946;
 
-    /* SURFACES */
-    --surface: #f8f9fa; /* Soft off-white */
-    --surface-card: #ffffff;
+:root {
+    /* New Minimalist Pill Tokens */
+    --primary-accent: #FF5C00; /* Vibrant Orange */
+    --text-primary: #111111; /* Solid Black */
+    --text-secondary: #444444;
+    --text-muted: #777777;
     
-    /* TEXT */
-    --text-primary: #000000; /* High contrast black */
-    --text-secondary: #222222;
-    --text-muted: #555555;
-    --border: #e2e6ea;
+    --surface-bg: #F2F2F2; /* Soft Grey */
+    --surface-card: #FFFFFF; /* Pure White */
+    --border: #e0e0e0;
 
     /* RADIUS (PILL DESIGN) */
+    --radius-pill: 999px;
+    --radius-card: 32px;
+
+    /* Backward Compat Mappings to fix previous components without HTML rewrite */
+    --zgen-green: #111111; /* All previous greens turn to solid black or white */
+    --zgen-green-deep: #000000;
+    --zgen-green-mid: #222222;
+    --zgen-green-light: #444444;
+    --zgen-gold: #FF5C00;
+    --zgen-gold-light: #FF8533;
+    --zgen-gold-dim: #CC4A00;
+    --surface: #F2F2F2;
+    
+    --orange-urgent: #FF5C00;
+    --turquoise: #111111;
+    --red-danger: #e63946;
+
     --radius-sm: 999px;
     --radius-md: 999px; 
-    --radius-lg: 24px;
+    --radius-lg: 32px;
 
-    /* SHADOWS */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
-    --transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
 }
+
 
 
 
@@ -2707,25 +2711,13 @@
             white-space: nowrap;
         }
 
-        .lead-status.new {
-            background: #e0f7fa;
-            color: #00838f;
-        }
+        
 
-        .lead-status.doc-verify {
-            background: #fff3e0;
-            color: #e65100;
-        }
+        
 
-        .lead-status.in-progress {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
+        
 
-        .lead-status.enrolled {
-            background: rgba(212, 175, 55, 0.12);
-            color: var(--zgen-gold-dim);
-        }
+        
 
         /* ─────────────────────────────────────────────
            Student Academic Card
@@ -2883,20 +2875,11 @@
             border-radius: 20px;
         }
 
-        .payment-badge.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
+        
 
-        .payment-badge.pending {
-            background: #fff3e0;
-            color: #e65100;
-        }
+        
 
-        .payment-badge.failed {
-            background: #fce4ec;
-            color: #c62828;
-        }
+        
 
         /* ─────────────────────────────────────────────
            Action Controls
@@ -3703,3 +3686,12 @@ html {
                 display: none;
             }
         }
+
+.payment-badge.success { background: var(--primary-accent); color: #fff; }
+.payment-badge.pending { background: var(--primary-accent); color: #fff; }
+.payment-badge.failed { background: var(--primary-accent); color: #fff; }
+
+.lead-status.doc-verify { background: var(--primary-accent); color: #fff; }
+.lead-status.new { background: var(--primary-accent); color: #fff; }
+.lead-status.in-progress { background: var(--primary-accent); color: #fff; }
+.lead-status.enrolled { background: var(--primary-accent); color: #fff; }
