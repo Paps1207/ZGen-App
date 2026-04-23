@@ -73,7 +73,7 @@
         .sidebar {
             width: 260px;
             min-height: 100vh;
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             display: flex;
             flex-direction: column;
@@ -192,7 +192,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--zgen-green);
+            background: #111111;
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -258,7 +258,7 @@
 
         .kpi-change.up {
             background: rgba(27, 67, 50, 0.08);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .kpi-change.down {
@@ -333,7 +333,7 @@
             padding: 3px 10px;
             border-radius: 20px;
             background: rgba(27, 67, 50, 0.06);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .chart-body {
@@ -377,7 +377,7 @@
         }
 
         .bar-fill.green {
-            background: linear-gradient(90deg, var(--zgen-green), var(--zgen-green-mid));
+            background: linear-gradient(90deg, #111111, #111111);
         }
 
         .bar-fill.gold {
@@ -743,7 +743,7 @@
         .report-output h4 {
             font-size: 0.78rem;
             font-weight: 600;
-            color: var(--zgen-green);
+            color: #111111;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -824,7 +824,7 @@
 
         .btn-gold {
             background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
-            color: var(--zgen-green-deep);
+            color: #111111;
         }
 
         .btn-gold:hover {
@@ -839,17 +839,17 @@
         }
 
         .btn-outline:hover {
-            border-color: var(--zgen-green);
-            color: var(--zgen-green);
+            border-color: #111111;
+            color: #111111;
         }
 
         .btn-green {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
         }
 
         .btn-green:hover {
-            background: var(--zgen-green-mid);
+            background: #111111;
             transform: translateY(-1px);
         }
 
@@ -865,7 +865,7 @@
         }
 
         .toast {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-md);
@@ -966,7 +966,7 @@
         .sidebar {
             width: 260px;
             min-height: 100vh;
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             display: flex;
             flex-direction: column;
@@ -1081,7 +1081,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--zgen-green);
+            background: #111111;
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -1159,13 +1159,13 @@
         }
 
         .filter-pill:hover {
-            border-color: var(--zgen-green-light);
-            color: var(--zgen-green);
+            border-color: #444444;
+            color: #111111;
         }
 
         .filter-pill.active {
             background: linear-gradient(135deg, var(--zgen-gold), var(--zgen-gold-dim));
-            color: var(--zgen-green-deep);
+            color: #111111;
             border-color: var(--zgen-gold);
             font-weight: 600;
         }
@@ -1269,7 +1269,7 @@
 
         .cell-score {
             font-weight: 600;
-            color: var(--zgen-green);
+            color: #111111;
             font-size: 0.85rem;
         }
 
@@ -1419,7 +1419,7 @@
         .detail-score-chip .exam-value {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .detail-score-chip .exam-value.none {
@@ -1460,7 +1460,7 @@
 
         .btn-gold {
             background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
-            color: var(--zgen-green-deep);
+            color: #111111;
         }
 
         .btn-gold:hover {
@@ -1475,8 +1475,8 @@
         }
 
         .btn-outline:hover {
-            border-color: var(--zgen-green);
-            color: var(--zgen-green);
+            border-color: #111111;
+            color: #111111;
             background: rgba(27, 67, 50, 0.03);
         }
 
@@ -1525,7 +1525,7 @@
         }
 
         .toast {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-md);
@@ -1671,7 +1671,7 @@
         .sidebar {
             width: 260px;
             min-height: 100vh;
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             display: flex;
             flex-direction: column;
@@ -1786,7 +1786,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--zgen-green);
+            background: #111111;
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -1836,7 +1836,7 @@
             padding: 3px 9px;
             border-radius: 20px;
             background: rgba(27, 67, 50, 0.08);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .panel-search {
@@ -1949,7 +1949,7 @@
 
         .doc-summary.complete {
             background: rgba(27, 67, 50, 0.08);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .doc-summary.partial {
@@ -1992,7 +1992,7 @@
             font-weight: 700;
             font-size: 0.95rem;
             color: white;
-            background: linear-gradient(135deg, var(--zgen-green), var(--zgen-green-mid));
+            background: linear-gradient(135deg, #111111, #111111);
         }
 
         .doc-center-header .meta h2 {
@@ -2031,15 +2031,16 @@
            Document Cards
         ───────────────────────────────────────────── */
         .doc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
 
         .doc-card {
             background: var(--surface);
             border: 1.5px solid var(--border);
-            border-radius: var(--radius-md);
+            border-radius: 32px;
             padding: 1.25rem;
             transition: var(--transition);
             position: relative;
@@ -2077,7 +2078,7 @@
 
         .doc-status-badge.verified {
             background: rgba(27, 67, 50, 0.1);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .doc-status-badge.pending {
@@ -2219,12 +2220,12 @@
         }
 
         .btn-green {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
         }
 
         .btn-green:hover {
-            background: var(--zgen-green-mid);
+            background: #111111;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px -4px rgba(27, 67, 50, 0.4);
         }
@@ -2247,8 +2248,8 @@
         }
 
         .btn-outline-sm:hover {
-            border-color: var(--zgen-green);
-            color: var(--zgen-green);
+            border-color: #111111;
+            color: #111111;
         }
 
         .btn-cancel {
@@ -2317,7 +2318,7 @@
         }
 
         .toast {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-md);
@@ -2382,8 +2383,11 @@
             }
 
             .doc-grid {
-                grid-template-columns: 1fr;
-            }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
         }
 
 /* CSS from counselor.html */
@@ -2422,7 +2426,7 @@
         .sidebar {
             width: 260px;
             min-height: 100vh;
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             display: flex;
             flex-direction: column;
@@ -2545,7 +2549,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--zgen-green);
+            background: #111111;
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -2600,7 +2604,7 @@
             padding: 4px 10px;
             border-radius: 20px;
             background: rgba(27, 67, 50, 0.08);
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .card-body {
@@ -2706,7 +2710,7 @@
             font-weight: 700;
             font-size: 1.4rem;
             color: white;
-            background: linear-gradient(135deg, var(--zgen-green) 0%, var(--zgen-green-mid) 100%);
+            background: linear-gradient(135deg, #111111 0%, #111111 100%);
         }
 
         .profile-meta h2 {
@@ -2729,7 +2733,7 @@
             padding: 3px 10px;
             border-radius: 6px;
             background: rgba(27, 67, 50, 0.06);
-            color: var(--zgen-green);
+            color: #111111;
             letter-spacing: 0.5px;
         }
 
@@ -2804,7 +2808,7 @@
         .score-chip .exam-score {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--zgen-green);
+            color: #111111;
         }
 
         .score-chip .exam-score.pending {
@@ -2876,7 +2880,7 @@
 
         .btn-gold {
             background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
-            color: var(--zgen-green-deep);
+            color: #111111;
         }
 
         .btn-gold:hover {
@@ -2891,18 +2895,18 @@
         }
 
         .btn-outline:hover {
-            border-color: var(--zgen-green);
-            color: var(--zgen-green);
+            border-color: #111111;
+            color: #111111;
             background: rgba(27, 67, 50, 0.03);
         }
 
         .btn-green {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
         }
 
         .btn-green:hover {
-            background: var(--zgen-green-mid);
+            background: #111111;
             transform: translateY(-1px);
             box-shadow: 0 6px 16px -6px rgba(27, 67, 50, 0.4);
         }
@@ -2988,7 +2992,7 @@
         }
 
         .toast {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-md);
@@ -3076,7 +3080,7 @@ html {
         .sidebar {
             width: 260px;
             min-height: 100vh;
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             display: flex;
             flex-direction: column;
@@ -3190,7 +3194,7 @@ html {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--zgen-green);
+            background: #111111;
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -3305,7 +3309,7 @@ html {
         }
 
         .toggle input:checked+.toggle-track {
-            background: var(--zgen-green);
+            background: #111111;
         }
 
         .toggle input:checked+.toggle-track::after {
@@ -3377,7 +3381,7 @@ html {
         }
 
         .priority-dot.low {
-            background: var(--zgen-green-light);
+            background: #444444;
         }
 
         .priority-item .p-name {
@@ -3433,7 +3437,7 @@ html {
             width: 64px;
             height: 64px;
             border-radius: 16px;
-            background: linear-gradient(135deg, var(--zgen-green), var(--zgen-green-mid));
+            background: linear-gradient(135deg, #111111, #111111);
             color: var(--zgen-gold);
             display: flex;
             align-items: center;
@@ -3531,7 +3535,7 @@ html {
 
         .btn-gold {
             background: linear-gradient(135deg, var(--zgen-gold) 0%, var(--zgen-gold-dim) 100%);
-            color: var(--zgen-green-deep);
+            color: #111111;
         }
 
         .btn-gold:hover {
@@ -3546,8 +3550,8 @@ html {
         }
 
         .btn-outline:hover {
-            border-color: var(--zgen-green);
-            color: var(--zgen-green);
+            border-color: #111111;
+            color: #111111;
         }
 
         .btn-danger-text {
@@ -3577,7 +3581,7 @@ html {
         }
 
         .toast {
-            background: var(--zgen-green);
+            background: #111111;
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--radius-md);
@@ -3662,3 +3666,12 @@ html {
 .lead-status.new { background: var(--primary-accent); color: #fff; }
 .lead-status.in-progress { background: var(--primary-accent); color: #fff; }
 .lead-status.enrolled { background: var(--primary-accent); color: #fff; }
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 280px 350px 1fr;
+    height: 100vh;
+}
+
+.doc-status-badge.rejected { background: #FF5C00 !important; color: #FFFFFF !important; }
+.doc-status-badge.verified { background: #111111 !important; color: #FFFFFF !important; }
