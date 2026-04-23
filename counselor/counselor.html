@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - counselor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Sidebar 
+    ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html" class="active">
+                <span class="nav-icon">📋</span> Lead Pipeline
+            </a>
+            <a href="counselor-profiles.html">
+                <span class="nav-icon">👤</span> Student Profiles
+            </a>
+            <a href="counselor-docs.html">
+                <span class="nav-icon">📄</span> Documents
+            </a>
+            <a href="counselor-reports.html">
+                <span class="nav-icon">📊</span> Reports
+            </a>
+            <a href="counselor-settings.html">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         Main Content 
+    ═══════════════════════════════════════════ -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <h1>
+                Lead Pipeline
+                <small>Manage your assigned student leads</small>
+            </h1>
+            <div class="topbar-actions">
+                <div class="avatar">CN</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+
+            <!-- ── Left: Lead List ────────────── -->
+            <div class="card" id="leadListCard">
+                <div class="card-header">
+                    <h3>Assigned Leads</h3>
+                    <span class="badge" id="leadCount">0 Leads</span>
+                </div>
+                <div class="card-body" id="leadListBody">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- ── Right: Student Academic Card ─ -->
+            <div class="card" id="studentCard">
+                <div class="card-header">
+                    <h3>Student Academic Card</h3>
+                </div>
+                <div class="card-body" id="studentCardBody">
+                    <div class="empty-state">
+                        <div class="empty-icon">👈</div>
+                        <p>Select a lead from the pipeline to view their profile.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════
+         Scripts
+    ═══════════════════════════════════════════ -->
+    <script src="./app.js"></script>
+</body>
+
+</html>

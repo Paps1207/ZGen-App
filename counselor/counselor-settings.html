@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html"><span class="nav-icon">📋</span> Lead Pipeline</a>
+            <a href="counselor-profiles.html"><span class="nav-icon">👤</span> Student Profiles</a>
+            <a href="counselor-docs.html"><span class="nav-icon">📄</span> Documents</a>
+            <a href="counselor-reports.html"><span class="nav-icon">📊</span> Reports</a>
+            <a href="counselor-settings.html" class="active"><span class="nav-icon">⚙️</span> Settings</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <div class="topbar">
+            <h1>
+                Settings
+                <small>Preferences, escalation rules, and account management</small>
+            </h1>
+            <div class="avatar">CN</div>
+        </div>
+
+        <!-- ═══════ Notification Preferences ═══════ -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h2>Notification Preferences</h2>
+                <p>Choose how you receive updates about leads and tasks.</p>
+            </div>
+            <div class="section-body">
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Email Notifications</h4>
+                        <p>Receive lead updates, document alerts, and reports via email.</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggleEmail" checked>
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>System Alerts</h4>
+                        <p>In-app notifications for real-time pipeline events.</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggleSystem" checked>
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Escalation Alerts</h4>
+                        <p>Immediate notification when a task meets your escalation criteria.</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggleEscalation" checked>
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Weekly Digest</h4>
+                        <p>Summary of pipeline health and pending actions every Monday.</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="toggleDigest">
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ Priority Levels ═══════ -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h2>Priority Levels</h2>
+                <p>Define which task types are treated as "Escalated" in your pipeline.</p>
+            </div>
+            <div class="priority-editor">
+                <div class="priority-label">Task Types</div>
+                <div class="priority-list" id="priorityList">
+                    <!-- rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ Profile & Credentials ═══════ -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h2>Profile & Credentials</h2>
+                <p>Your account information and sign-in credentials.</p>
+            </div>
+            <div class="profile-body">
+                <div class="profile-header-row">
+                    <div class="profile-avatar" id="profileAvatar">CN</div>
+                    <div class="profile-meta">
+                        <h3 id="profileFullName">counselor Name</h3>
+                        <p>counselor · Joined April 2026</p>
+                    </div>
+                </div>
+                <form id="profileForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input class="form-input" type="text" id="firstName" value="counselor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input class="form-input" type="text" id="lastName" value="Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-input" type="email" id="email" value="counselor@zgen.edu">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input class="form-input" type="tel" id="phone" value="+91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="newPassword">New Password</label>
+                            <input class="form-input" type="password" id="newPassword"
+                                placeholder="Leave blank to keep current">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
+                            <input class="form-input" type="password" id="confirmPassword"
+                                placeholder="Repeat new password">
+                        </div>
+                    </div>
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline" id="btnResetForm">Discard</button>
+                        <button type="submit" class="btn btn-gold">
+                            <span class="btn-icon">💾</span> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="danger-zone">
+                <div class="danger-zone-label">Danger Zone</div>
+                <button class="btn-danger-text" id="btnDeactivate">Deactivate my account →</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ══════════════════════════════════════════
+            //  Notification toggle persistence (session)
+            // ══════════════════════════════════════════
+            const toggleIds = ['toggleEmail', 'toggleSystem', 'toggleEscalation', 'toggleDigest'];
+
+            toggleIds.forEach(id => {
+                const el = document.getElementById(id);
+                const saved = sessionStorage.getItem(id);
+                if (saved !== null) el.checked = saved === 'true';
+
+                el.addEventListener('change', () => {
+                    sessionStorage.setItem(id, el.checked);
+                    const label = el.closest('.setting-row').querySelector('h4').textContent;
+                    showToast(`${el.checked ? '✓ Enabled' : '✕ Disabled'}: ${label}`);
+                });
+            });
+
+            // ══════════════════════════════════════════
+            //  Priority Levels
+            // ══════════════════════════════════════════
+            const priorities = [
+                { key: 'payment-fail', level: 'critical', name: 'Payment Failed', desc: 'Lead payment was declined or reversed.', escalated: true },
+                { key: 'doc-rejected', level: 'high', name: 'Document Rejected', desc: 'Uploaded document failed verification.', escalated: true },
+                { key: 'inactive-90', level: 'high', name: 'Inactive >90 Days', desc: 'No activity recorded for over 90 days.', escalated: true },
+                { key: 'intake-stuck', level: 'medium', name: 'Stuck in Intake', desc: 'Lead has not progressed past initial phase.', escalated: false },
+                { key: 'follow-up', level: 'medium', name: 'Follow-Up Overdue', desc: 'Scheduled follow-up date has passed.', escalated: false },
+                { key: 'new-lead', level: 'low', name: 'New Lead Assigned', desc: 'A new lead has been added to your pipeline.', escalated: false }
+            ];
+
+            function renderPriorities() {
+                const list = document.getElementById('priorityList');
+                list.innerHTML = '';
+
+                priorities.forEach(p => {
+                    const item = document.createElement('div');
+                    item.className = 'priority-item' + (p.escalated ? ' escalated' : '');
+                    item.innerHTML = `
+                    <span class="priority-dot ${p.level}"></span>
+                    <span class="p-name">${p.name}</span>
+                    <span class="p-desc">${p.desc}</span>
+                    <button class="escalate-btn ${p.escalated ? 'active' : ''}" data-key="${p.key}">
+                        ${p.escalated ? '⚡ Escalated' : 'Mark Escalated'}
+                    </button>
+                `;
+
+                    item.querySelector('.escalate-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        p.escalated = !p.escalated;
+                        showToast(p.escalated ? `⚡ "${p.name}" marked as escalated` : `"${p.name}" de-escalated`);
+                        renderPriorities();
+                    });
+
+                    list.appendChild(item);
+                });
+            }
+
+            renderPriorities();
+
+            // ══════════════════════════════════════════
+            //  Profile Form
+            // ══════════════════════════════════════════
+            const profileForm = document.getElementById('profileForm');
+            const firstNameEl = document.getElementById('firstName');
+            const lastNameEl = document.getElementById('lastName');
+
+            function updateDisplayName() {
+                const full = `${firstNameEl.value.trim()} ${lastNameEl.value.trim()}`;
+                document.getElementById('profileFullName').textContent = full;
+                const initials = full.split(' ').filter(Boolean).map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                document.getElementById('profileAvatar').textContent = initials;
+                document.querySelector('.avatar').textContent = initials;
+            }
+
+            firstNameEl.addEventListener('input', updateDisplayName);
+            lastNameEl.addEventListener('input', updateDisplayName);
+            updateDisplayName();
+
+            profileForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const newPw = document.getElementById('newPassword').value;
+                const confirmPw = document.getElementById('confirmPassword').value;
+
+                if (newPw && newPw !== confirmPw) {
+                    showToast('⚠ Passwords do not match', 'warn');
+                    return;
+                }
+
+                showToast('✓ Profile updated successfully');
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            });
+
+            document.getElementById('btnResetForm').addEventListener('click', () => {
+                firstNameEl.value = 'counselor';
+                lastNameEl.value = 'Name';
+                document.getElementById('email').value = 'counselor@zgen.edu';
+                document.getElementById('phone').value = '+91 98765 43210';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                updateDisplayName();
+                showToast('Form reset to defaults');
+            });
+
+            document.getElementById('btnDeactivate').addEventListener('click', () => {
+                if (confirm('Are you sure you want to deactivate your account? This action cannot be undone.')) {
+                    showToast('⚠ Account deactivation requested', 'warn');
+                }
+            });
+
+            // ── Toast ────────────────────────────────
+            function showToast(message, type = 'default') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = 'toast' + (type === 'warn' ? ' warn' : '');
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+        });
+    </script>
+</body>
+
+</html>

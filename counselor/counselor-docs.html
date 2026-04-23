@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Document Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Sidebar
+    ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html">
+                <span class="nav-icon">📋</span> Lead Pipeline
+            </a>
+            <a href="counselor-profiles.html">
+                <span class="nav-icon">👤</span> Student Profiles
+            </a>
+            <a href="counselor-docs.html" class="active">
+                <span class="nav-icon">📄</span> Documents
+            </a>
+            <a href="counselor-reports.html">
+                <span class="nav-icon">📊</span> Reports
+            </a>
+            <a href="counselor-settings.html">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         Main Content
+    ═══════════════════════════════════════════ -->
+    <main class="main">
+
+        <div class="topbar">
+            <h1>
+                Document Center
+                <small>Verify, approve, and manage student document submissions</small>
+            </h1>
+            <div class="avatar">CN</div>
+        </div>
+
+        <div class="doc-layout">
+
+            <!-- Left: Student Grid -->
+            <div class="student-panel">
+                <div class="panel-header">
+                    <h3>Students</h3>
+                    <span class="badge" id="studentCount">0</span>
+                </div>
+                <div class="panel-search">
+                    <input type="text" id="studentSearch" placeholder="Search students…">
+                </div>
+                <div class="student-list" id="studentList">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+            <!-- Right: Document Center -->
+            <div class="doc-center" id="docCenter">
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <p>Select a student to view their document submissions.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════
+         Script — Document Center Module
+    ═══════════════════════════════════════════ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ── Data ──────────────────────────────
+            const avatarColors = ['#1B4332', '#2d6a4f', '#40916c', '#D4AF37', '#a68a2a', '#4B0082', '#00838f', '#e65100'];
+
+            const docTypes = [
+                { type: 'Passport', icon: '🛂' },
+                { type: '10th Marksheet', icon: '📑' },
+                { type: '12th Marksheet', icon: '📑' },
+                { type: 'Degree Certificate', icon: '🎓' },
+                { type: 'SOP Draft', icon: '📝' },
+                { type: 'LOR', icon: '✉️' },
+                { type: 'Resume / CV', icon: '📋' }
+            ];
+
+            // Generate documents for each student
+            function makeDocs(seed) {
+                const statuses = ['Verified', 'Pending', 'Rejected', 'Verified', 'Pending'];
+                return docTypes.map((dt, i) => ({
+                    ...dt,
+                    status: statuses[(i + seed) % statuses.length],
+                    uploadDate: '2026-04-' + String(5 + i * 2).padStart(2, '0'),
+                    expiry: dt.type === 'Passport' ? '2034-08-15' : null,
+                    rejectionReason: null
+                }));
+            }
+
+            const students = [
+                { id: 'STU-1001', name: 'Riya Sharma', nationality: 'Indian', email: 'riya.sharma@mail.com', docs: makeDocs(0) },
+                { id: 'STU-1002', name: 'Arjun Mehta', nationality: 'Indian', email: 'arjun.m@mail.com', docs: makeDocs(1) },
+                { id: 'STU-1003', name: 'Sara Al-Farsi', nationality: 'Omani', email: 'sara.alfarsi@mail.com', docs: makeDocs(2) },
+                { id: 'STU-1004', name: "Liam O'Brien", nationality: 'Irish', email: 'liam.ob@mail.com', docs: makeDocs(3) },
+                { id: 'STU-1005', name: 'Meera Patel', nationality: 'Indian', email: 'meera.p@mail.com', docs: makeDocs(4) },
+                { id: 'STU-1006', name: 'Anika Desai', nationality: 'Indian', email: 'anika.d@mail.com', docs: makeDocs(0) },
+                { id: 'STU-1007', name: 'Tomás García', nationality: 'Mexican', email: 'tomas.g@mail.com', docs: makeDocs(1) },
+                { id: 'STU-1008', name: 'Priya Nair', nationality: 'Indian', email: 'priya.n@mail.com', docs: makeDocs(2) }
+            ];
+
+            let selectedStudentId = null;
+            let searchQuery = '';
+            let rejectingDocIndex = null; // tracks which doc card has its reject form open
+
+            const studentList = document.getElementById('studentList');
+            const docCenter = document.getElementById('docCenter');
+            const studentCount = document.getElementById('studentCount');
+
+            // ── Helpers ──────────────────────────────
+            function getInitials(name) { return name.split(' ').map(w => w[0]).join(''); }
+
+            function docSummary(docs) {
+                const verified = docs.filter(d => d.status === 'Verified').length;
+                const total = docs.length;
+                const hasRejected = docs.some(d => d.status === 'Rejected');
+                return { verified, total, hasRejected };
+            }
+
+            function getFiltered() {
+                if (!searchQuery) return students;
+                const q = searchQuery.toLowerCase();
+                return students.filter(s =>
+                    s.name.toLowerCase().includes(q) ||
+                    s.id.toLowerCase().includes(q)
+                );
+            }
+
+            // ── Render Student List ──────────────────
+            function renderStudentList() {
+                const filtered = getFiltered();
+                studentCount.textContent = filtered.length;
+                studentList.innerHTML = '';
+
+                filtered.forEach((s, i) => {
+                    const initials = getInitials(s.name);
+                    const color = avatarColors[i % avatarColors.length];
+                    const { verified, total, hasRejected } = docSummary(s.docs);
+
+                    let summaryClass = 'partial';
+                    if (verified === total) summaryClass = 'complete';
+                    else if (hasRejected) summaryClass = 'has-rejected';
+
+                    const item = document.createElement('div');
+                    item.className = 'student-item' + (s.id === selectedStudentId ? ' selected' : '');
+                    item.innerHTML = `
+                    <div class="stu-avatar" style="background:${color}">${initials}</div>
+                    <div class="stu-info">
+                        <h4>${s.name}</h4>
+                        <p>${s.id} · ${s.nationality}</p>
+                    </div>
+                    <span class="doc-summary ${summaryClass}">${verified}/${total} Verified</span>
+                `;
+                    item.addEventListener('click', () => selectStudent(s.id));
+                    studentList.appendChild(item);
+                });
+            }
+
+            // ── Render Document Center ───────────────
+            function renderDocCenter() {
+                const student = students.find(s => s.id === selectedStudentId);
+                if (!student) {
+                    docCenter.innerHTML = `<div class="empty-state"><div class="empty-icon">📂</div><p>Select a student to view their document submissions.</p></div>`;
+                    return;
+                }
+
+                const initials = getInitials(student.name);
+                const { verified, total, hasRejected } = docSummary(student.docs);
+                const rejectedDocs = student.docs.filter(d => d.status === 'Rejected');
+
+                let notifHTML = '';
+                if (hasRejected) {
+                    notifHTML = `
+                    <div class="notification-banner">
+                        <span class="notif-icon">⚠️</span>
+                        <span><strong>${rejectedDocs.length} document${rejectedDocs.length > 1 ? 's' : ''}</strong> rejected — awaiting student re-upload.</span>
+                    </div>
+                `;
+                }
+
+                let cardsHTML = '';
+                student.docs.forEach((doc, idx) => {
+                    const statusClass = doc.status.toLowerCase();
+                    const isRejecting = rejectingDocIndex === idx;
+
+                    let rejectionHTML = '';
+                    if (doc.status === 'Rejected' && doc.rejectionReason) {
+                        rejectionHTML = `
+                        <div class="rejection-display">
+                            <strong>Rejection Reason</strong>
+                            ${doc.rejectionReason}
+                        </div>
+                    `;
+                    }
+
+                    let actionsHTML = '';
+                    if (doc.status === 'Pending') {
+                        actionsHTML = `
+                        <div class="doc-actions">
+                            <button class="btn btn-green" data-action="approve" data-idx="${idx}">
+                                <span class="btn-icon">✓</span> Approve
+                            </button>
+                            <button class="btn btn-orange" data-action="reject-start" data-idx="${idx}">
+                                <span class="btn-icon">✕</span> Reject
+                            </button>
+                        </div>
+                    `;
+                    } else if (doc.status === 'Verified') {
+                        actionsHTML = `
+                        <div class="doc-actions">
+                            <button class="btn btn-outline-sm" disabled>
+                                <span class="btn-icon">✓</span> Verified
+                            </button>
+                        </div>
+                    `;
+                    } else if (doc.status === 'Rejected') {
+                        actionsHTML = `
+                        <div class="doc-actions">
+                            <button class="btn btn-outline-sm" disabled>
+                                <span class="btn-icon">⏳</span> Awaiting Re-upload
+                            </button>
+                        </div>
+                    `;
+                    }
+
+                    let rejectFormHTML = '';
+                    if (isRejecting) {
+                        rejectFormHTML = `
+                        <div class="reject-form" id="rejectForm-${idx}">
+                            <label for="rejectReason-${idx}">Reason for Rejection</label>
+                            <textarea id="rejectReason-${idx}" placeholder="e.g., Image is blurry, name mismatch, expired document…"></textarea>
+                            <div class="reject-form-actions">
+                                <button class="btn btn-cancel" data-action="reject-cancel" data-idx="${idx}">Cancel</button>
+                                <button class="btn btn-confirm-reject" data-action="reject-confirm" data-idx="${idx}">
+                                    <span class="btn-icon">✕</span> Confirm Rejection
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    }
+
+                    cardsHTML += `
+                    <div class="doc-card">
+                        <div class="doc-card-top">
+                            <div class="doc-icon">${doc.icon}</div>
+                            <span class="doc-status-badge ${statusClass}">${doc.status}</span>
+                        </div>
+                        <h4>${doc.type}</h4>
+                        <div class="doc-meta">
+                            <span>Uploaded: ${doc.uploadDate}</span>
+                            ${doc.expiry ? `<span>Expires: ${doc.expiry}</span>` : ''}
+                        </div>
+                        ${rejectionHTML}
+                        ${actionsHTML}
+                        ${rejectFormHTML}
+                    </div>
+                `;
+                });
+
+                docCenter.innerHTML = `
+                <div class="doc-center-header">
+                    <div class="doc-avatar">${initials}</div>
+                    <div class="meta">
+                        <h2>${student.name}</h2>
+                        <p>${student.id} · ${student.email} · ${verified}/${total} verified</p>
+                    </div>
+                </div>
+                <div class="doc-center-body">
+                    ${notifHTML}
+                    <div class="doc-grid">
+                        ${cardsHTML}
+                    </div>
+                </div>
+            `;
+
+                // Wire up action buttons
+                docCenter.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const idx = parseInt(btn.dataset.idx);
+                        handleDocAction(btn.dataset.action, student, idx);
+                    });
+                });
+            }
+
+            // ── Actions ──────────────────────────────
+            function handleDocAction(action, student, idx) {
+                const doc = student.docs[idx];
+
+                switch (action) {
+                    case 'approve':
+                        doc.status = 'Verified';
+                        showToast(`✓ ${doc.type} approved for ${student.name}`);
+                        rejectingDocIndex = null;
+                        renderDocCenter();
+                        renderStudentList();
+                        break;
+
+                    case 'reject-start':
+                        rejectingDocIndex = idx;
+                        renderDocCenter();
+                        // Focus the textarea after render
+                        setTimeout(() => {
+                            const textarea = document.getElementById(`rejectReason-${idx}`);
+                            if (textarea) textarea.focus();
+                        }, 100);
+                        break;
+
+                    case 'reject-cancel':
+                        rejectingDocIndex = null;
+                        renderDocCenter();
+                        break;
+
+                    case 'reject-confirm':
+                        const textarea = document.getElementById(`rejectReason-${idx}`);
+                        const reason = textarea ? textarea.value.trim() : '';
+                        if (!reason) {
+                            textarea.style.borderColor = 'var(--red-danger)';
+                            textarea.setAttribute('placeholder', 'A reason is required before rejecting.');
+                            textarea.focus();
+                            return;
+                        }
+                        doc.status = 'Rejected';
+                        doc.rejectionReason = reason;
+                        rejectingDocIndex = null;
+                        showToast(`⚠️ ${doc.type} rejected — notification sent to ${student.name}`, 'warn');
+                        renderDocCenter();
+                        renderStudentList();
+                        break;
+                }
+            }
+
+            // ── Select Student ───────────────────────
+            function selectStudent(id) {
+                selectedStudentId = id;
+                rejectingDocIndex = null;
+                renderStudentList();
+                renderDocCenter();
+            }
+
+            // ── Search ───────────────────────────────
+            document.getElementById('studentSearch').addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim();
+                renderStudentList();
+            });
+
+            // ── Toast ────────────────────────────────
+            function showToast(message, type = 'default') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = 'toast' + (type === 'warn' ? ' warn' : '');
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+            // ── Init ─────────────────────────────────
+            renderStudentList();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - counselor Reports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html"><span class="nav-icon">📋</span> Lead Pipeline</a>
+            <a href="counselor-profiles.html"><span class="nav-icon">👤</span> Student Profiles</a>
+            <a href="counselor-docs.html"><span class="nav-icon">📄</span> Documents</a>
+            <a href="counselor-reports.html" class="active"><span class="nav-icon">📊</span> Reports</a>
+            <a href="counselor-settings.html"><span class="nav-icon">⚙️</span> Settings</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <div class="topbar">
+            <h1>
+                Reports & Analytics
+                <small>counselor performance metrics and lead pipeline health</small>
+            </h1>
+            <div class="topbar-actions">
+                <button class="btn btn-gold" id="btnCustomReport">
+                    <span class="btn-icon">📄</span> Generate Custom Report
+                </button>
+                <div class="avatar">CN</div>
+            </div>
+        </div>
+
+        <!-- KPI Row -->
+        <div class="kpi-row" id="kpiRow"></div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+
+            <!-- Lead Conversion Rate -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Lead Conversion Rate</h3>
+                    <span class="badge">By Location</span>
+                </div>
+                <div class="chart-body" id="conversionChart"></div>
+            </div>
+
+            <!-- Payment Status Breakdown -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Payment Status</h3>
+                    <span class="badge">All Leads</span>
+                </div>
+                <div class="chart-body" id="paymentChart"></div>
+            </div>
+
+            <!-- Intake Phase Funnel -->
+            <div class="chart-card" style="grid-column: 1 / -1;">
+                <div class="chart-header">
+                    <h3>Students by Intake Phase</h3>
+                    <span class="badge">Pipeline Health</span>
+                </div>
+                <div class="chart-body" id="funnelChart"></div>
+            </div>
+
+        </div>
+
+        <!-- Inactive Leads Alert -->
+        <div class="alerts-section">
+            <div class="alerts-header">
+                <h3>⚠️ Inactive Leads Alert</h3>
+                <span class="alert-count" id="alertCount">0</span>
+            </div>
+            <div class="alert-list" id="alertList"></div>
+        </div>
+
+    </main>
+
+    <!-- Custom Report Modal -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Generate Custom Report</h3>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Target Location</label>
+                    <select class="form-select" id="filterLocation">
+                        <option value="all">All Locations</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Netherlands">Netherlands</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Intake Year</label>
+                    <select class="form-select" id="filterIntake">
+                        <option value="all">All Intakes</option>
+                        <option value="Fall 2026">Fall 2026</option>
+                        <option value="Spring 2027">Spring 2027</option>
+                        <option value="Winter 2026">Winter 2026</option>
+                    </select>
+                </div>
+                <div class="report-output" id="reportOutput"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modalCancel">Cancel</button>
+                <button class="btn btn-green" id="btnGenerate">
+                    <span class="btn-icon">📊</span> Generate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ══════════════════════════════════════════
+            //  Mock Data
+            // ══════════════════════════════════════════
+            const leads = [
+                { id: 'STU-1001', name: 'Riya Sharma', targets: 'USA, Canada', intake: 'Fall 2026', status: 'new', payment: 'Success', lastActivity: 45 },
+                { id: 'STU-1002', name: 'Arjun Mehta', targets: 'UK, Ireland', intake: 'Spring 2027', status: 'doc-verify', payment: 'Pending', lastActivity: 12 },
+                { id: 'STU-1003', name: 'Sara Al-Farsi', targets: 'Australia', intake: 'Fall 2026', status: 'new', payment: 'Failed', lastActivity: 105 },
+                { id: 'STU-1004', name: "Liam O'Brien", targets: 'USA', intake: 'Fall 2026', status: 'in-progress', payment: 'Success', lastActivity: 3 },
+                { id: 'STU-1005', name: 'Meera Patel', targets: 'Germany, Netherlands', intake: 'Winter 2026', status: 'enrolled', payment: 'Success', lastActivity: 7 },
+                { id: 'STU-1006', name: 'Anika Desai', targets: 'USA, UK', intake: 'Fall 2026', status: 'in-progress', payment: 'Success', lastActivity: 2 },
+                { id: 'STU-1007', name: 'Tomás García', targets: 'Canada, Germany', intake: 'Fall 2026', status: 'new', payment: 'Pending', lastActivity: 130 },
+                { id: 'STU-1008', name: 'Priya Nair', targets: 'UK, Australia', intake: 'Spring 2027', status: 'doc-verify', payment: 'Success', lastActivity: 92 },
+                { id: 'STU-1009', name: 'Rahul Verma', targets: 'USA', intake: 'Fall 2026', status: 'enrolled', payment: 'Success', lastActivity: 15 },
+                { id: 'STU-1010', name: 'Zara Khan', targets: 'Canada', intake: 'Spring 2027', status: 'new', payment: 'Pending', lastActivity: 98 },
+                { id: 'STU-1011', name: 'David Lee', targets: 'USA, UK', intake: 'Fall 2026', status: 'in-progress', payment: 'Success', lastActivity: 8 },
+                { id: 'STU-1012', name: 'Fatima Hassan', targets: 'Australia, UK', intake: 'Fall 2026', status: 'doc-verify', payment: 'Success', lastActivity: 20 }
+            ];
+
+            // ══════════════════════════════════════════
+            //  KPI Cards
+            // ══════════════════════════════════════════
+            const totalLeads = leads.length;
+            const converted = leads.filter(l => l.status === 'enrolled').length;
+            const conversionRate = Math.round((converted / totalLeads) * 100);
+            const paySuccess = leads.filter(l => l.payment === 'Success').length;
+            const stuckIntake = leads.filter(l => l.status === 'new').length;
+            const inactive = leads.filter(l => l.lastActivity > 90).length;
+
+            document.getElementById('kpiRow').innerHTML = `
+            <div class="kpi-card">
+                <div class="kpi-icon green" style="float:right">📈</div>
+                <div class="kpi-label">Lead Conversion</div>
+                <div class="kpi-value">${conversionRate}<span class="unit">%</span></div>
+                <div class="kpi-change up">↑ ${converted} of ${totalLeads} enrolled</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon gold" style="float:right">💰</div>
+                <div class="kpi-label">Payment Successes</div>
+                <div class="kpi-value">${paySuccess}<span class="unit">/ ${totalLeads}</span></div>
+                <div class="kpi-change up">↑ ${Math.round((paySuccess / totalLeads) * 100)}% clearance rate</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon orange" style="float:right">⏸️</div>
+                <div class="kpi-label">Stuck in Intake</div>
+                <div class="kpi-value">${stuckIntake}</div>
+                <div class="kpi-change down">↓ ${Math.round((stuckIntake / totalLeads) * 100)}% not progressing</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon teal" style="float:right">🔔</div>
+                <div class="kpi-label">Inactive >90 Days</div>
+                <div class="kpi-value">${inactive}</div>
+                <div class="kpi-change ${inactive > 0 ? 'down' : 'up'}">${inactive > 0 ? '⚠ Action needed' : '✓ All active'}</div>
+            </div>
+        `;
+
+            // ══════════════════════════════════════════
+            //  Lead Conversion by Location (Bar Chart)
+            // ══════════════════════════════════════════
+            const locations = {};
+            leads.forEach(l => {
+                l.targets.split(', ').forEach(loc => {
+                    if (!locations[loc]) locations[loc] = { total: 0, enrolled: 0 };
+                    locations[loc].total++;
+                    if (l.status === 'enrolled') locations[loc].enrolled++;
+                });
+            });
+
+            const sortedLocs = Object.entries(locations).sort((a, b) => b[1].total - a[1].total);
+            const maxLocCount = Math.max(...sortedLocs.map(([, v]) => v.total));
+            const barColors = ['green', 'gold', 'teal', 'orange', 'green', 'gold', 'teal', 'orange'];
+
+            let convHTML = '<div class="bar-chart">';
+            sortedLocs.forEach(([loc, data], i) => {
+                const pct = Math.round((data.total / maxLocCount) * 100);
+                const rate = data.total > 0 ? Math.round((data.enrolled / data.total) * 100) : 0;
+                convHTML += `
+                <div class="bar-row">
+                    <span class="bar-label">${loc}</span>
+                    <div class="bar-track">
+                        <div class="bar-fill ${barColors[i % barColors.length]}" style="width: ${pct}%"></div>
+                    </div>
+                    <span class="bar-value">${data.total} <span style="color:var(--text-muted);font-weight:400;font-size:0.7rem">(${rate}%)</span></span>
+                </div>`;
+            });
+            convHTML += '</div>';
+            document.getElementById('conversionChart').innerHTML = convHTML;
+
+            // ══════════════════════════════════════════
+            //  Payment Status (Donut Chart via conic-gradient)
+            // ══════════════════════════════════════════
+            const paySuc = leads.filter(l => l.payment === 'Success').length;
+            const payPen = leads.filter(l => l.payment === 'Pending').length;
+            const payFail = leads.filter(l => l.payment === 'Failed').length;
+            const payTotal = leads.length;
+
+            const sucDeg = (paySuc / payTotal) * 360;
+            const penDeg = (payPen / payTotal) * 360;
+
+            document.getElementById('paymentChart').innerHTML = `
+            <div class="donut-container">
+                <div class="donut-ring" style="background: conic-gradient(
+                    var(--zgen-green) 0deg ${sucDeg}deg,
+                    var(--zgen-gold) ${sucDeg}deg ${sucDeg + penDeg}deg,
+                    var(--orange-urgent) ${sucDeg + penDeg}deg 360deg
+                );">
+                    <div class="donut-center" style="width:100px;height:100px;background:var(--surface-card);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                        <div class="big">${paySuc}</div>
+                        <div class="sub">Successful</div>
+                    </div>
+                </div>
+                <div class="donut-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:var(--zgen-green)"></div>
+                        <span>Success</span>
+                        <span class="legend-value">${paySuc}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:var(--zgen-gold)"></div>
+                        <span>Pending</span>
+                        <span class="legend-value">${payPen}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background:var(--orange-urgent)"></div>
+                        <span>Failed</span>
+                        <span class="legend-value">${payFail}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            // ══════════════════════════════════════════
+            //  Intake Phase Funnel
+            // ══════════════════════════════════════════
+            const phases = [
+                { key: 'new', label: 'Lead Intake', color: 'var(--zgen-gold)' },
+                { key: 'doc-verify', label: 'Doc Verification', color: 'var(--orange-urgent)' },
+                { key: 'in-progress', label: 'App Execution', color: 'var(--zgen-green-mid)' },
+                { key: 'enrolled', label: 'Enrolled', color: 'var(--zgen-green)' }
+            ];
+
+            const maxPhase = leads.length;
+            let funnelHTML = '<div class="funnel">';
+            phases.forEach(p => {
+                const count = leads.filter(l => l.status === p.key).length;
+                const pct = Math.round((count / maxPhase) * 100);
+                const isStuck = p.key === 'new' && count > 2;
+                funnelHTML += `
+                <div class="funnel-step">
+                    <span class="funnel-label">${p.label}</span>
+                    <div class="bar-track" style="flex:1">
+                        <div class="funnel-bar" style="width:${pct}%; background:${p.color};">${pct}%</div>
+                    </div>
+                    <span class="funnel-count">${count}</span>
+                    ${isStuck ? '<span class="stuck-badge">⚠ Stuck</span>' : ''}
+                </div>`;
+            });
+            funnelHTML += '</div>';
+            document.getElementById('funnelChart').innerHTML = funnelHTML;
+
+            // ══════════════════════════════════════════
+            //  Inactive Leads Alert
+            // ══════════════════════════════════════════
+            const inactiveLeads = leads.filter(l => l.lastActivity > 90);
+            document.getElementById('alertCount').textContent = `${inactiveLeads.length} alerts`;
+
+            let alertHTML = '';
+            if (inactiveLeads.length === 0) {
+                alertHTML = '<div style="padding:2rem;text-align:center;color:var(--text-muted);font-size:0.88rem;">✓ No inactive leads. All students active within 90 days.</div>';
+            } else {
+                inactiveLeads.forEach(l => {
+                    alertHTML += `
+                    <div class="alert-item">
+                        <div class="alert-icon">⏰</div>
+                        <div class="alert-info">
+                            <h4>${l.name}</h4>
+                            <p>${l.id} · ${l.targets} · ${l.intake}</p>
+                        </div>
+                        <span class="alert-days">${l.lastActivity} days</span>
+                    </div>`;
+                });
+            }
+            document.getElementById('alertList').innerHTML = alertHTML;
+
+            // ══════════════════════════════════════════
+            //  Custom Report Modal
+            // ══════════════════════════════════════════
+            const modal = document.getElementById('reportModal');
+            const output = document.getElementById('reportOutput');
+
+            document.getElementById('btnCustomReport').addEventListener('click', () => {
+                modal.classList.add('open');
+                output.classList.remove('visible');
+            });
+
+            [document.getElementById('modalClose'), document.getElementById('modalCancel')].forEach(el => {
+                el.addEventListener('click', () => {
+                    modal.classList.remove('open');
+                    output.classList.remove('visible');
+                });
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) { modal.classList.remove('open'); output.classList.remove('visible'); }
+            });
+
+            document.getElementById('btnGenerate').addEventListener('click', () => {
+                const locFilter = document.getElementById('filterLocation').value;
+                const intakeFilter = document.getElementById('filterIntake').value;
+
+                let filtered = [...leads];
+                if (locFilter !== 'all') {
+                    filtered = filtered.filter(l => l.targets.includes(locFilter));
+                }
+                if (intakeFilter !== 'all') {
+                    filtered = filtered.filter(l => l.intake === intakeFilter);
+                }
+
+                const fTotal = filtered.length;
+                const fEnrolled = filtered.filter(l => l.status === 'enrolled').length;
+                const fConv = fTotal > 0 ? Math.round((fEnrolled / fTotal) * 100) : 0;
+                const fPaySuc = filtered.filter(l => l.payment === 'Success').length;
+                const fStuck = filtered.filter(l => l.status === 'new').length;
+                const fInactive = filtered.filter(l => l.lastActivity > 90).length;
+
+                output.innerHTML = `
+                <h4>Report Results</h4>
+                <div class="report-stat"><span class="label">Total Leads</span><span class="value">${fTotal}</span></div>
+                <div class="report-stat"><span class="label">Conversion Rate</span><span class="value">${fConv}%</span></div>
+                <div class="report-stat"><span class="label">Payment Successes</span><span class="value">${fPaySuc} / ${fTotal}</span></div>
+                <div class="report-stat"><span class="label">Stuck in Intake</span><span class="value">${fStuck}</span></div>
+                <div class="report-stat"><span class="label">Inactive >90 Days</span><span class="value">${fInactive}</span></div>
+            `;
+                output.classList.add('visible');
+
+                showToast(`📊 Custom report generated — ${fTotal} leads match filters`);
+            });
+
+            // ── Toast ────────────────────────────────
+            function showToast(message) {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+        });
+    </script>
+</body>
+
+</html>

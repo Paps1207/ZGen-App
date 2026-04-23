@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZGen - Student Profiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         Sidebar
+    ═══════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2>ZGen</h2>
+            <span>counselor Portal</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="counselor.html">
+                <span class="nav-icon">📋</span> Lead Pipeline
+            </a>
+            <a href="counselor-profiles.html" class="active">
+                <span class="nav-icon">👤</span> Student Profiles
+            </a>
+            <a href="counselor-docs.html">
+                <span class="nav-icon">📄</span> Documents
+            </a>
+            <a href="counselor-reports.html">
+                <span class="nav-icon">📊</span> Reports
+            </a>
+            <a href="counselor-settings.html">
+                <span class="nav-icon">⚙️</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../login.html">← Sign Out</a>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         Main Content
+    ═══════════════════════════════════════════ -->
+    <main class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <h1>
+                Student Profiles
+                <small>Search, review, and manage student academic records</small>
+            </h1>
+            <div class="avatar">CN</div>
+        </div>
+
+        <!-- Toolbar: Search + Filters -->
+        <div class="toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="profileSearch" placeholder="Search by name, ID, or nationality…">
+            </div>
+            <div class="filter-group" id="filterGroup">
+                <button class="filter-pill active" data-filter="all">All</button>
+                <button class="filter-pill" data-filter="new">New</button>
+                <button class="filter-pill" data-filter="doc-verify">Doc Verify</button>
+                <button class="filter-pill" data-filter="in-progress">In Progress</button>
+                <button class="filter-pill" data-filter="enrolled">Enrolled</button>
+                <button class="filter-pill" data-filter="flagged">Flagged</button>
+                <button class="filter-pill" data-filter="archived">Archived</button>
+            </div>
+            <span class="result-count" id="resultCount"></span>
+        </div>
+
+        <!-- Profile Table -->
+        <div class="profile-table" id="profileTable">
+            <div class="table-header">
+                <span>Student</span>
+                <span>Education</span>
+                <span>GRE</span>
+                <span>IELTS</span>
+                <span>Status</span>
+                <span></span>
+            </div>
+            <div id="tableBody">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════
+         Script — Student Profiles Module
+    ═══════════════════════════════════════════ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ── Mock Data (mirrors & extends counselor leads) ──────────
+            const avatarColors = ['#1B4332', '#2d6a4f', '#40916c', '#D4AF37', '#a68a2a', '#4B0082', '#00838f', '#e65100'];
+
+            const students = [
+                {
+                    id: 'STU-1001', name: 'Riya Sharma', nationality: 'Indian',
+                    email: 'riya.sharma@mail.com', phone: '+91 98765 43210',
+                    education: 'B.Tech CS – VIT Vellore (2023)',
+                    educationFull: 'B.Tech Computer Science – VIT Vellore (2023)',
+                    workExp: '1 year – TCS Digital',
+                    targets: 'USA, Canada', budget: '₹35L', intake: 'Fall 2026',
+                    gre: 318, ielts: 7.5, toefl: null,
+                    status: 'new', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1002', name: 'Arjun Mehta', nationality: 'Indian',
+                    email: 'arjun.m@mail.com', phone: '+91 87654 32109',
+                    education: 'B.Com Hons – SRCC (2022)',
+                    educationFull: 'B.Com Honours – SRCC Delhi (2022)',
+                    workExp: '2 years – Deloitte',
+                    targets: 'UK, Ireland', budget: '₹28L', intake: 'Spring 2027',
+                    gre: null, ielts: 8.0, toefl: 105,
+                    status: 'doc-verify', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1003', name: 'Sara Al-Farsi', nationality: 'Omani',
+                    email: 'sara.alfarsi@mail.com', phone: '+968 9123 4567',
+                    education: 'BSc Biology – SQU (2024)',
+                    educationFull: 'BSc Biology – Sultan Qaboos University (2024)',
+                    workExp: 'Fresher',
+                    targets: 'Australia', budget: '$45K AUD', intake: 'Fall 2026',
+                    gre: 310, ielts: null, toefl: 98,
+                    status: 'new', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1004', name: 'Liam O\'Brien', nationality: 'Irish',
+                    email: 'liam.ob@mail.com', phone: '+353 85 123 4567',
+                    education: 'BA Econ – Trinity College (2023)',
+                    educationFull: 'BA Economics – Trinity College Dublin (2023)',
+                    workExp: '1 year – KPMG',
+                    targets: 'USA', budget: '€40K', intake: 'Fall 2026',
+                    gre: 325, ielts: 8.5, toefl: 112,
+                    status: 'in-progress', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1005', name: 'Meera Patel', nationality: 'Indian',
+                    email: 'meera.p@mail.com', phone: '+91 99887 76655',
+                    education: 'B.Arch – CEPT (2024)',
+                    educationFull: 'B.Arch – CEPT Ahmedabad (2024)',
+                    workExp: 'Fresher',
+                    targets: 'Germany, Netherlands', budget: '₹18L', intake: 'Winter 2026',
+                    gre: null, ielts: 6.5, toefl: null,
+                    status: 'enrolled', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1006', name: 'Anika Desai', nationality: 'Indian',
+                    email: 'anika.d@mail.com', phone: '+91 91234 56789',
+                    education: 'B.Sc Statistics – ISI (2023)',
+                    educationFull: 'B.Sc Statistics – Indian Statistical Institute (2023)',
+                    workExp: '1 year – Goldman Sachs',
+                    targets: 'USA, UK', budget: '₹50L', intake: 'Fall 2026',
+                    gre: 332, ielts: 8.0, toefl: 115,
+                    status: 'in-progress', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1007', name: 'Tomás García', nationality: 'Mexican',
+                    email: 'tomas.g@mail.com', phone: '+52 55 1234 5678',
+                    education: 'Ing. Industrial – ITESM (2024)',
+                    educationFull: 'Ingeniería Industrial – ITESM Monterrey (2024)',
+                    workExp: 'Fresher',
+                    targets: 'Canada, Germany', budget: '$30K USD', intake: 'Fall 2026',
+                    gre: 305, ielts: 7.0, toefl: null,
+                    status: 'new', flagged: false, archived: false
+                },
+                {
+                    id: 'STU-1008', name: 'Priya Nair', nationality: 'Indian',
+                    email: 'priya.n@mail.com', phone: '+91 98111 22233',
+                    education: 'MBBS – JIPMER (2022)',
+                    educationFull: 'MBBS – JIPMER Puducherry (2022)',
+                    workExp: '2 years – Apollo Hospitals',
+                    targets: 'UK, Australia', budget: '₹60L', intake: 'Spring 2027',
+                    gre: null, ielts: 7.5, toefl: 102,
+                    status: 'doc-verify', flagged: false, archived: false
+                }
+            ];
+
+            let expandedId = null;
+            let activeFilter = 'all';
+            let searchQuery = '';
+
+            const tableBody = document.getElementById('tableBody');
+            const resultCount = document.getElementById('resultCount');
+
+            // ── Status label helper ──────────
+            const statusLabel = (s) => ({
+                'new': 'New', 'doc-verify': 'Doc Verify',
+                'in-progress': 'In Progress', 'enrolled': 'Enrolled',
+                'archived': 'Archived', 'flagged': 'Flagged'
+            }[s] || s);
+
+            // ── Get effective status ──────────
+            function effectiveStatus(s) {
+                if (s.archived) return 'archived';
+                if (s.flagged) return 'flagged';
+                return s.status;
+            }
+
+            // ── Filter students ──────────
+            function getFiltered() {
+                return students.filter(s => {
+                    // Filter
+                    if (activeFilter !== 'all') {
+                        const eff = effectiveStatus(s);
+                        if (eff !== activeFilter) return false;
+                    }
+                    // Search
+                    if (searchQuery) {
+                        const q = searchQuery.toLowerCase();
+                        return s.name.toLowerCase().includes(q) ||
+                            s.id.toLowerCase().includes(q) ||
+                            s.nationality.toLowerCase().includes(q) ||
+                            s.email.toLowerCase().includes(q);
+                    }
+                    return true;
+                });
+            }
+
+            // ── Render table ──────────
+            function render() {
+                const filtered = getFiltered();
+                resultCount.textContent = `${filtered.length} of ${students.length} profiles`;
+
+                if (filtered.length === 0) {
+                    tableBody.innerHTML = `<div class="empty-table"><div class="empty-icon">🔎</div><p>No profiles match your search or filter.</p></div>`;
+                    return;
+                }
+
+                tableBody.innerHTML = '';
+                filtered.forEach((s, i) => {
+                    const initials = s.name.split(' ').map(w => w[0]).join('');
+                    const color = avatarColors[i % avatarColors.length];
+                    const isExpanded = expandedId === s.id;
+                    const eff = effectiveStatus(s);
+
+                    const row = document.createElement('div');
+                    row.className = 'table-row' + (isExpanded ? ' expanded' : '');
+                    row.dataset.id = s.id;
+
+                    row.innerHTML = `
+                    <div class="row-summary">
+                        <div class="cell cell-student">
+                            <div class="cell-avatar" style="background:${color}">${initials}</div>
+                            <div>
+                                <div class="cell-name">${s.name}</div>
+                                <div class="cell-id">${s.id} · ${s.nationality}</div>
+                            </div>
+                        </div>
+                        <div class="cell">${s.education}</div>
+                        <div class="cell-score ${s.gre == null ? 'none' : ''}">${s.gre != null ? s.gre : '—'}</div>
+                        <div class="cell-score ${s.ielts == null ? 'none' : ''}">${s.ielts != null ? s.ielts : '—'}</div>
+                        <div class="cell"><span class="status-badge ${eff}">${statusLabel(eff)}</span></div>
+                        <div class="expand-toggle">▼</div>
+                    </div>
+                    <div class="row-detail">
+                        <div class="detail-inner">
+                            <div class="detail-section">
+                                <div class="detail-section-title">Academic Profile</div>
+                                <div class="detail-row"><span class="label">Education</span><span class="value">${s.educationFull}</span></div>
+                                <div class="detail-row"><span class="label">Work Exp</span><span class="value">${s.workExp}</span></div>
+                                <div class="detail-row"><span class="label">Email</span><span class="value">${s.email}</span></div>
+                                <div class="detail-row"><span class="label">Phone</span><span class="value">${s.phone}</span></div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-section-title">Test Scores</div>
+                                <div class="detail-scores">
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">GRE</div>
+                                        <div class="exam-value ${s.gre == null ? 'none' : ''}">${s.gre != null ? s.gre : 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">IELTS</div>
+                                        <div class="exam-value ${s.ielts == null ? 'none' : ''}">${s.ielts != null ? s.ielts : 'N/A'}</div>
+                                    </div>
+                                    <div class="detail-score-chip">
+                                        <div class="exam-label">TOEFL</div>
+                                        <div class="exam-value ${s.toefl == null ? 'none' : ''}">${s.toefl != null ? s.toefl : 'N/A'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-section-title">Preferences</div>
+                                <div class="detail-row"><span class="label">Targets</span><span class="value">${s.targets}</span></div>
+                                <div class="detail-row"><span class="label">Budget</span><span class="value">${s.budget}</span></div>
+                                <div class="detail-row"><span class="label">Intake</span><span class="value">${s.intake}</span></div>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="btn btn-gold" data-action="edit" data-id="${s.id}">
+                                    <span class="btn-icon">✎</span> Edit Profile
+                                </button>
+                                <button class="btn btn-danger-outline" data-action="flag" data-id="${s.id}" ${s.flagged ? 'disabled' : ''}>
+                                    <span class="btn-icon">⚑</span> ${s.flagged ? 'Flagged' : 'Flag for Review'}
+                                </button>
+                                <button class="btn btn-muted-outline" data-action="archive" data-id="${s.id}" ${s.archived ? 'disabled' : ''}>
+                                    <span class="btn-icon">📦</span> ${s.archived ? 'Archived' : 'Archive Lead'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                    // Toggle expand
+                    row.querySelector('.row-summary').addEventListener('click', () => {
+                        expandedId = expandedId === s.id ? null : s.id;
+                        render();
+                    });
+
+                    // Action buttons
+                    row.querySelectorAll('[data-action]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            handleAction(btn.dataset.action, btn.dataset.id);
+                        });
+                    });
+
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // ── Handle actions ──────────
+            function handleAction(action, id) {
+                const student = students.find(s => s.id === id);
+                if (!student) return;
+
+                switch (action) {
+                    case 'edit':
+                        showToast(`✎ Editing profile for ${student.name}`, 'default');
+                        break;
+                    case 'flag':
+                        student.flagged = true;
+                        showToast(`⚑ ${student.name} flagged for review`, 'warn');
+                        render();
+                        break;
+                    case 'archive':
+                        student.archived = true;
+                        showToast(`📦 ${student.name} archived`, 'default');
+                        render();
+                        break;
+                }
+            }
+
+            // ── Search ──────────
+            document.getElementById('profileSearch').addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim();
+                render();
+            });
+
+            // ── Filter pills ──────────
+            document.getElementById('filterGroup').addEventListener('click', (e) => {
+                if (!e.target.classList.contains('filter-pill')) return;
+                activeFilter = e.target.dataset.filter;
+                document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+                e.target.classList.add('active');
+                render();
+            });
+
+            // ── Toast ──────────
+            function showToast(message, type = 'default') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = 'toast' + (type === 'warn' ? ' warn' : type === 'danger' ? ' danger' : '');
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+            // ── Initial render ──────────
+            render();
+        });
+    </script>
+</body>
+
+</html>
