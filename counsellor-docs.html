@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,36 +11,46 @@
            Design Tokens
         ───────────────────────────────────────────── */
         :root {
-            --zgen-green:       #1B4332;
-            --zgen-green-deep:  #081c15;
-            --zgen-green-mid:   #2d6a4f;
+            --zgen-green: #1B4332;
+            --zgen-green-deep: #081c15;
+            --zgen-green-mid: #2d6a4f;
             --zgen-green-light: #40916c;
-            --zgen-gold:        #D4AF37;
-            --zgen-gold-light:  #eedd82;
-            --zgen-gold-dim:    #a68a2a;
-            --surface:          #f5f7f5;
-            --surface-card:     #ffffff;
-            --text-primary:     #1a1a2e;
-            --text-secondary:   #555b6e;
-            --text-muted:       #8d93a5;
-            --border:           #e2e6ea;
-            --turquoise:        #40E0D0;
-            --orange-urgent:    #FF8C00;
-            --red-danger:       #e63946;
-            --radius-sm:        8px;
-            --radius-md:        12px;
-            --radius-lg:        20px;
-            --shadow-sm:        0 1px 3px rgba(0,0,0,0.06);
-            --shadow-md:        0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg:        0 12px 32px rgba(0,0,0,0.10);
-            --transition:       all 0.25s cubic-bezier(.4,0,.2,1);
+            --zgen-gold: #D4AF37;
+            --zgen-gold-light: #eedd82;
+            --zgen-gold-dim: #a68a2a;
+            --surface: #f5f7f5;
+            --surface-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #555b6e;
+            --text-muted: #8d93a5;
+            --border: #e2e6ea;
+            --turquoise: #40E0D0;
+            --orange-urgent: #FF8C00;
+            --red-danger: #e63946;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+            --transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
         }
 
         /* ─────────────────────────────────────────────
            Reset & Base
         ───────────────────────────────────────────── */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 15px; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 15px;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: var(--surface);
@@ -52,27 +63,132 @@
         /* ─────────────────────────────────────────────
            Sidebar
         ───────────────────────────────────────────── */
-        .sidebar { width: 260px; min-height: 100vh; background: var(--zgen-green); color: white; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
-        .sidebar-brand { padding: 2rem 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .sidebar-brand h2 { color: var(--zgen-gold); font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; }
-        .sidebar-brand span { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px; text-transform: uppercase; letter-spacing: 1.5px; }
-        .sidebar-nav { flex: 1; padding: 1.5rem 0; }
-        .sidebar-nav a { display: flex; align-items: center; gap: 12px; padding: 0.85rem 1.5rem; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: var(--transition); border-left: 3px solid transparent; }
-        .sidebar-nav a:hover { color: white; background: rgba(255,255,255,0.05); }
-        .sidebar-nav a.active { color: var(--zgen-gold); background: rgba(212,175,55,0.08); border-left-color: var(--zgen-gold); }
-        .sidebar-nav a .nav-icon { width: 20px; text-align: center; font-size: 1.05rem; }
-        .sidebar-footer { padding: 1.25rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
-        .sidebar-footer a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.8rem; transition: var(--transition); }
-        .sidebar-footer a:hover { color: var(--zgen-gold); }
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--zgen-green);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-brand h2 {
+            color: var(--zgen-gold);
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-brand span {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-nav a.active {
+            color: var(--zgen-gold);
+            background: rgba(212, 175, 55, 0.08);
+            border-left-color: var(--zgen-gold);
+        }
+
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+
+        .sidebar-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-footer a {
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .sidebar-footer a:hover {
+            color: var(--zgen-gold);
+        }
 
         /* ─────────────────────────────────────────────
            Main Content
         ───────────────────────────────────────────── */
-        .main { flex: 1; margin-left: 260px; padding: 2.5rem 3rem; }
-        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-        .topbar h1 { font-size: 1.6rem; font-weight: 700; }
-        .topbar h1 small { display: block; font-size: 0.8rem; font-weight: 400; color: var(--text-muted); margin-top: 4px; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--zgen-green); color: var(--zgen-gold); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+        .main {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2.5rem 3rem;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .topbar h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .topbar h1 small {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--zgen-green);
+            color: var(--zgen-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
 
         /* ─────────────────────────────────────────────
            Two-Panel Layout
@@ -104,11 +220,18 @@
             justify-content: space-between;
         }
 
-        .panel-header h3 { font-size: 0.95rem; font-weight: 600; }
+        .panel-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
 
         .panel-header .badge {
-            font-size: 0.7rem; font-weight: 600; padding: 3px 9px;
-            border-radius: 20px; background: rgba(27,67,50,0.08); color: var(--zgen-green);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+            background: rgba(27, 67, 50, 0.08);
+            color: var(--zgen-green);
         }
 
         .panel-search {
@@ -131,16 +254,30 @@
 
         .panel-search input:focus {
             border-color: var(--zgen-gold);
-            box-shadow: 0 0 0 2px rgba(212,175,55,0.1);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
         }
 
-        .panel-search input::placeholder { color: var(--text-muted); }
+        .panel-search input::placeholder {
+            color: var(--text-muted);
+        }
 
-        .student-list { max-height: 68vh; overflow-y: auto; }
+        .student-list {
+            max-height: 68vh;
+            overflow-y: auto;
+        }
 
-        .student-list::-webkit-scrollbar { width: 4px; }
-        .student-list::-webkit-scrollbar-track { background: transparent; }
-        .student-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .student-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .student-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .student-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
 
         .student-item {
             display: flex;
@@ -152,24 +289,48 @@
             transition: var(--transition);
         }
 
-        .student-item:last-child { border-bottom: none; }
-        .student-item:hover { background: rgba(27,67,50,0.02); }
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-item:hover {
+            background: rgba(27, 67, 50, 0.02);
+        }
 
         .student-item.selected {
-            background: rgba(212,175,55,0.06);
+            background: rgba(212, 175, 55, 0.06);
             border-left: 3px solid var(--zgen-gold);
             padding-left: calc(1.25rem - 3px);
         }
 
         .stu-avatar {
-            width: 38px; height: 38px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.8rem; color: white; flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            flex-shrink: 0;
         }
 
-        .stu-info { flex: 1; min-width: 0; }
-        .stu-info h4 { font-size: 0.85rem; font-weight: 600; }
-        .stu-info p { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+        .stu-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .stu-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stu-info p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
 
         /* Doc summary chip */
         .doc-summary {
@@ -181,9 +342,20 @@
             flex-shrink: 0;
         }
 
-        .doc-summary.complete { background: rgba(27,67,50,0.08); color: var(--zgen-green); }
-        .doc-summary.partial  { background: rgba(212,175,55,0.12); color: var(--zgen-gold-dim); }
-        .doc-summary.has-rejected { background: rgba(255,140,0,0.12); color: var(--orange-urgent); }
+        .doc-summary.complete {
+            background: rgba(27, 67, 50, 0.08);
+            color: var(--zgen-green);
+        }
+
+        .doc-summary.partial {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--zgen-gold-dim);
+        }
+
+        .doc-summary.has-rejected {
+            background: rgba(255, 140, 0, 0.12);
+            color: var(--orange-urgent);
+        }
 
         /* ─────────────────────────────────────────────
            Right Panel – Document Center
@@ -206,16 +378,32 @@
         }
 
         .doc-center-header .doc-avatar {
-            width: 44px; height: 44px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.95rem; color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
             background: linear-gradient(135deg, var(--zgen-green), var(--zgen-green-mid));
         }
 
-        .doc-center-header .meta h2 { font-size: 1.05rem; font-weight: 700; }
-        .doc-center-header .meta p { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .doc-center-header .meta h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
 
-        .doc-center-body { padding: 1.5rem; }
+        .doc-center-header .meta p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .doc-center-body {
+            padding: 1.5rem;
+        }
 
         /* Empty state */
         .empty-state {
@@ -223,8 +411,16 @@
             padding: 5rem 2rem;
             color: var(--text-muted);
         }
-        .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.25; }
-        .empty-state p { font-size: 0.9rem; }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.25;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+        }
 
         /* ─────────────────────────────────────────────
            Document Cards
@@ -246,7 +442,7 @@
 
         .doc-card:hover {
             box-shadow: var(--shadow-md);
-            border-color: rgba(27,67,50,0.15);
+            border-color: rgba(27, 67, 50, 0.15);
         }
 
         .doc-card-top {
@@ -257,11 +453,14 @@
         }
 
         .doc-icon {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.2rem;
-            background: rgba(27,67,50,0.06);
+            background: rgba(27, 67, 50, 0.06);
         }
 
         .doc-status-badge {
@@ -271,9 +470,20 @@
             border-radius: 20px;
         }
 
-        .doc-status-badge.verified  { background: rgba(27,67,50,0.1); color: var(--zgen-green); }
-        .doc-status-badge.pending   { background: rgba(212,175,55,0.12); color: var(--zgen-gold-dim); }
-        .doc-status-badge.rejected  { background: rgba(255,140,0,0.12); color: var(--orange-urgent); }
+        .doc-status-badge.verified {
+            background: rgba(27, 67, 50, 0.1);
+            color: var(--zgen-green);
+        }
+
+        .doc-status-badge.pending {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--zgen-gold-dim);
+        }
+
+        .doc-status-badge.rejected {
+            background: rgba(255, 140, 0, 0.12);
+            color: var(--orange-urgent);
+        }
 
         .doc-card h4 {
             font-size: 0.88rem;
@@ -287,12 +497,14 @@
             margin-bottom: 1rem;
         }
 
-        .doc-card .doc-meta span { margin-right: 10px; }
+        .doc-card .doc-meta span {
+            margin-right: 10px;
+        }
 
         /* Rejection reason display */
         .rejection-display {
-            background: rgba(255,140,0,0.06);
-            border: 1px solid rgba(255,140,0,0.15);
+            background: rgba(255, 140, 0, 0.06);
+            border: 1px solid rgba(255, 140, 0, 0.15);
             border-radius: var(--radius-sm);
             padding: 0.65rem 0.85rem;
             margin-bottom: 0.85rem;
@@ -321,8 +533,8 @@
         .reject-form {
             margin-top: 0.75rem;
             padding: 0.85rem;
-            background: rgba(255,140,0,0.04);
-            border: 1px solid rgba(255,140,0,0.15);
+            background: rgba(255, 140, 0, 0.04);
+            border: 1px solid rgba(255, 140, 0, 0.15);
             border-radius: var(--radius-sm);
             animation: fadeInDown 0.25s ease;
         }
@@ -341,7 +553,7 @@
             width: 100%;
             min-height: 70px;
             padding: 0.6rem;
-            border: 1.5px solid rgba(255,140,0,0.2);
+            border: 1.5px solid rgba(255, 140, 0, 0.2);
             border-radius: 6px;
             font-size: 0.82rem;
             font-family: inherit;
@@ -354,10 +566,12 @@
 
         .reject-form textarea:focus {
             border-color: var(--orange-urgent);
-            box-shadow: 0 0 0 2px rgba(255,140,0,0.1);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.1);
         }
 
-        .reject-form textarea::placeholder { color: var(--text-muted); }
+        .reject-form textarea::placeholder {
+            color: var(--text-muted);
+        }
 
         .reject-form-actions {
             display: flex;
@@ -367,37 +581,97 @@
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-6px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ─────────────────────────────────────────────
            Buttons
         ───────────────────────────────────────────── */
         .btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 0.55rem 1rem; border: none; border-radius: var(--radius-sm);
-            font-size: 0.78rem; font-weight: 600; cursor: pointer;
-            transition: var(--transition); font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.55rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
         }
-        .btn .btn-icon { font-size: 0.85rem; }
 
-        .btn-green { background: var(--zgen-green); color: white; }
-        .btn-green:hover { background: var(--zgen-green-mid); transform: translateY(-1px); box-shadow: 0 4px 12px -4px rgba(27,67,50,0.4); }
+        .btn .btn-icon {
+            font-size: 0.85rem;
+        }
 
-        .btn-orange { background: var(--orange-urgent); color: white; }
-        .btn-orange:hover { background: #e07b00; transform: translateY(-1px); box-shadow: 0 4px 12px -4px rgba(255,140,0,0.4); }
+        .btn-green {
+            background: var(--zgen-green);
+            color: white;
+        }
 
-        .btn-outline-sm { background: transparent; border: 1.5px solid var(--border); color: var(--text-secondary); }
-        .btn-outline-sm:hover { border-color: var(--zgen-green); color: var(--zgen-green); }
+        .btn-green:hover {
+            background: var(--zgen-green-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px -4px rgba(27, 67, 50, 0.4);
+        }
 
-        .btn-cancel { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); }
-        .btn-cancel:hover { border-color: #aaa; color: #666; }
+        .btn-orange {
+            background: var(--orange-urgent);
+            color: white;
+        }
 
-        .btn-confirm-reject { background: var(--orange-urgent); color: white; }
-        .btn-confirm-reject:hover { background: #e07b00; }
+        .btn-orange:hover {
+            background: #e07b00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px -4px rgba(255, 140, 0, 0.4);
+        }
 
-        .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+        .btn-outline-sm {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline-sm:hover {
+            border-color: var(--zgen-green);
+            color: var(--zgen-green);
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-cancel:hover {
+            border-color: #aaa;
+            color: #666;
+        }
+
+        .btn-confirm-reject {
+            background: var(--orange-urgent);
+            color: white;
+        }
+
+        .btn-confirm-reject:hover {
+            background: #e07b00;
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
 
         /* ─────────────────────────────────────────────
            Notification banner  
@@ -407,8 +681,8 @@
             align-items: center;
             gap: 10px;
             padding: 0.85rem 1.15rem;
-            background: rgba(255,140,0,0.06);
-            border: 1px solid rgba(255,140,0,0.15);
+            background: rgba(255, 140, 0, 0.06);
+            border: 1px solid rgba(255, 140, 0, 0.15);
             border-radius: var(--radius-sm);
             margin-bottom: 1.25rem;
             font-size: 0.82rem;
@@ -416,36 +690,99 @@
             animation: fadeInDown 0.3s ease;
         }
 
-        .notification-banner .notif-icon { font-size: 1.1rem; }
-        .notification-banner strong { margin-right: 4px; }
+        .notification-banner .notif-icon {
+            font-size: 1.1rem;
+        }
+
+        .notification-banner strong {
+            margin-right: 4px;
+        }
 
         /* ─────────────────────────────────────────────
            Toast
         ───────────────────────────────────────────── */
-        .toast-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast {
-            background: var(--zgen-green); color: white; padding: 1rem 1.5rem; border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg); font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 10px;
-            animation: slideIn 0.35s ease, fadeOut 0.35s ease 2.5s forwards; max-width: 420px;
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        .toast.warn { background: var(--orange-urgent); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(10px); } }
+
+        .toast {
+            background: var(--zgen-green);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.35s ease, fadeOut 0.35s ease 2.5s forwards;
+            max-width: 420px;
+        }
+
+        .toast.warn {
+            background: var(--orange-urgent);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
 
         /* ─────────────────────────────────────────────
            Responsive
         ───────────────────────────────────────────── */
         @media (max-width: 1100px) {
-            .doc-layout { grid-template-columns: 1fr; }
-            .student-list { max-height: 300px; }
+            .doc-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .student-list {
+                max-height: 300px;
+            }
         }
+
         @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main { margin-left: 0; padding: 1.5rem; }
-            .doc-grid { grid-template-columns: 1fr; }
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- ═══════════════════════════════════════════
@@ -454,22 +791,22 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <h2>ZGen</h2>
-            <span>Counselor Portal</span>
+            <span>counsellor Portal</span>
         </div>
         <nav class="sidebar-nav">
-            <a href="counselor.html">
+            <a href="counsellor.html">
                 <span class="nav-icon">📋</span> Lead Pipeline
             </a>
-            <a href="counselor-profiles.html">
+            <a href="counsellor-profiles.html">
                 <span class="nav-icon">👤</span> Student Profiles
             </a>
-            <a href="counselor-docs.html" class="active">
+            <a href="counsellor-docs.html" class="active">
                 <span class="nav-icon">📄</span> Documents
             </a>
-            <a href="counselor-reports.html">
+            <a href="counsellor-reports.html">
                 <span class="nav-icon">📊</span> Reports
             </a>
-            <a href="counselor-settings.html">
+            <a href="counsellor-settings.html">
                 <span class="nav-icon">⚙️</span> Settings
             </a>
         </nav>
@@ -525,89 +862,89 @@
          Script — Document Center Module
     ═══════════════════════════════════════════ -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
 
-        // ── Data ──────────────────────────────
-        const avatarColors = ['#1B4332','#2d6a4f','#40916c','#D4AF37','#a68a2a','#4B0082','#00838f','#e65100'];
+            // ── Data ──────────────────────────────
+            const avatarColors = ['#1B4332', '#2d6a4f', '#40916c', '#D4AF37', '#a68a2a', '#4B0082', '#00838f', '#e65100'];
 
-        const docTypes = [
-            { type: 'Passport',       icon: '🛂' },
-            { type: '10th Marksheet', icon: '📑' },
-            { type: '12th Marksheet', icon: '📑' },
-            { type: 'Degree Certificate', icon: '🎓' },
-            { type: 'SOP Draft',      icon: '📝' },
-            { type: 'LOR',            icon: '✉️' },
-            { type: 'Resume / CV',    icon: '📋' }
-        ];
+            const docTypes = [
+                { type: 'Passport', icon: '🛂' },
+                { type: '10th Marksheet', icon: '📑' },
+                { type: '12th Marksheet', icon: '📑' },
+                { type: 'Degree Certificate', icon: '🎓' },
+                { type: 'SOP Draft', icon: '📝' },
+                { type: 'LOR', icon: '✉️' },
+                { type: 'Resume / CV', icon: '📋' }
+            ];
 
-        // Generate documents for each student
-        function makeDocs(seed) {
-            const statuses = ['Verified','Pending','Rejected','Verified','Pending'];
-            return docTypes.map((dt, i) => ({
-                ...dt,
-                status: statuses[(i + seed) % statuses.length],
-                uploadDate: '2026-04-' + String(5 + i * 2).padStart(2, '0'),
-                expiry: dt.type === 'Passport' ? '2034-08-15' : null,
-                rejectionReason: null
-            }));
-        }
+            // Generate documents for each student
+            function makeDocs(seed) {
+                const statuses = ['Verified', 'Pending', 'Rejected', 'Verified', 'Pending'];
+                return docTypes.map((dt, i) => ({
+                    ...dt,
+                    status: statuses[(i + seed) % statuses.length],
+                    uploadDate: '2026-04-' + String(5 + i * 2).padStart(2, '0'),
+                    expiry: dt.type === 'Passport' ? '2034-08-15' : null,
+                    rejectionReason: null
+                }));
+            }
 
-        const students = [
-            { id: 'STU-1001', name: 'Riya Sharma',    nationality: 'Indian',  email: 'riya.sharma@mail.com',  docs: makeDocs(0) },
-            { id: 'STU-1002', name: 'Arjun Mehta',    nationality: 'Indian',  email: 'arjun.m@mail.com',      docs: makeDocs(1) },
-            { id: 'STU-1003', name: 'Sara Al-Farsi',  nationality: 'Omani',   email: 'sara.alfarsi@mail.com', docs: makeDocs(2) },
-            { id: 'STU-1004', name: "Liam O'Brien",   nationality: 'Irish',   email: 'liam.ob@mail.com',      docs: makeDocs(3) },
-            { id: 'STU-1005', name: 'Meera Patel',    nationality: 'Indian',  email: 'meera.p@mail.com',      docs: makeDocs(4) },
-            { id: 'STU-1006', name: 'Anika Desai',    nationality: 'Indian',  email: 'anika.d@mail.com',      docs: makeDocs(0) },
-            { id: 'STU-1007', name: 'Tomás García',   nationality: 'Mexican', email: 'tomas.g@mail.com',      docs: makeDocs(1) },
-            { id: 'STU-1008', name: 'Priya Nair',     nationality: 'Indian',  email: 'priya.n@mail.com',      docs: makeDocs(2) }
-        ];
+            const students = [
+                { id: 'STU-1001', name: 'Riya Sharma', nationality: 'Indian', email: 'riya.sharma@mail.com', docs: makeDocs(0) },
+                { id: 'STU-1002', name: 'Arjun Mehta', nationality: 'Indian', email: 'arjun.m@mail.com', docs: makeDocs(1) },
+                { id: 'STU-1003', name: 'Sara Al-Farsi', nationality: 'Omani', email: 'sara.alfarsi@mail.com', docs: makeDocs(2) },
+                { id: 'STU-1004', name: "Liam O'Brien", nationality: 'Irish', email: 'liam.ob@mail.com', docs: makeDocs(3) },
+                { id: 'STU-1005', name: 'Meera Patel', nationality: 'Indian', email: 'meera.p@mail.com', docs: makeDocs(4) },
+                { id: 'STU-1006', name: 'Anika Desai', nationality: 'Indian', email: 'anika.d@mail.com', docs: makeDocs(0) },
+                { id: 'STU-1007', name: 'Tomás García', nationality: 'Mexican', email: 'tomas.g@mail.com', docs: makeDocs(1) },
+                { id: 'STU-1008', name: 'Priya Nair', nationality: 'Indian', email: 'priya.n@mail.com', docs: makeDocs(2) }
+            ];
 
-        let selectedStudentId = null;
-        let searchQuery = '';
-        let rejectingDocIndex = null; // tracks which doc card has its reject form open
+            let selectedStudentId = null;
+            let searchQuery = '';
+            let rejectingDocIndex = null; // tracks which doc card has its reject form open
 
-        const studentList  = document.getElementById('studentList');
-        const docCenter    = document.getElementById('docCenter');
-        const studentCount = document.getElementById('studentCount');
+            const studentList = document.getElementById('studentList');
+            const docCenter = document.getElementById('docCenter');
+            const studentCount = document.getElementById('studentCount');
 
-        // ── Helpers ──────────────────────────────
-        function getInitials(name) { return name.split(' ').map(w => w[0]).join(''); }
+            // ── Helpers ──────────────────────────────
+            function getInitials(name) { return name.split(' ').map(w => w[0]).join(''); }
 
-        function docSummary(docs) {
-            const verified = docs.filter(d => d.status === 'Verified').length;
-            const total = docs.length;
-            const hasRejected = docs.some(d => d.status === 'Rejected');
-            return { verified, total, hasRejected };
-        }
+            function docSummary(docs) {
+                const verified = docs.filter(d => d.status === 'Verified').length;
+                const total = docs.length;
+                const hasRejected = docs.some(d => d.status === 'Rejected');
+                return { verified, total, hasRejected };
+            }
 
-        function getFiltered() {
-            if (!searchQuery) return students;
-            const q = searchQuery.toLowerCase();
-            return students.filter(s =>
-                s.name.toLowerCase().includes(q) ||
-                s.id.toLowerCase().includes(q)
-            );
-        }
+            function getFiltered() {
+                if (!searchQuery) return students;
+                const q = searchQuery.toLowerCase();
+                return students.filter(s =>
+                    s.name.toLowerCase().includes(q) ||
+                    s.id.toLowerCase().includes(q)
+                );
+            }
 
-        // ── Render Student List ──────────────────
-        function renderStudentList() {
-            const filtered = getFiltered();
-            studentCount.textContent = filtered.length;
-            studentList.innerHTML = '';
+            // ── Render Student List ──────────────────
+            function renderStudentList() {
+                const filtered = getFiltered();
+                studentCount.textContent = filtered.length;
+                studentList.innerHTML = '';
 
-            filtered.forEach((s, i) => {
-                const initials = getInitials(s.name);
-                const color = avatarColors[i % avatarColors.length];
-                const { verified, total, hasRejected } = docSummary(s.docs);
+                filtered.forEach((s, i) => {
+                    const initials = getInitials(s.name);
+                    const color = avatarColors[i % avatarColors.length];
+                    const { verified, total, hasRejected } = docSummary(s.docs);
 
-                let summaryClass = 'partial';
-                if (verified === total) summaryClass = 'complete';
-                else if (hasRejected) summaryClass = 'has-rejected';
+                    let summaryClass = 'partial';
+                    if (verified === total) summaryClass = 'complete';
+                    else if (hasRejected) summaryClass = 'has-rejected';
 
-                const item = document.createElement('div');
-                item.className = 'student-item' + (s.id === selectedStudentId ? ' selected' : '');
-                item.innerHTML = `
+                    const item = document.createElement('div');
+                    item.className = 'student-item' + (s.id === selectedStudentId ? ' selected' : '');
+                    item.innerHTML = `
                     <div class="stu-avatar" style="background:${color}">${initials}</div>
                     <div class="stu-info">
                         <h4>${s.name}</h4>
@@ -615,51 +952,51 @@
                     </div>
                     <span class="doc-summary ${summaryClass}">${verified}/${total} Verified</span>
                 `;
-                item.addEventListener('click', () => selectStudent(s.id));
-                studentList.appendChild(item);
-            });
-        }
-
-        // ── Render Document Center ───────────────
-        function renderDocCenter() {
-            const student = students.find(s => s.id === selectedStudentId);
-            if (!student) {
-                docCenter.innerHTML = `<div class="empty-state"><div class="empty-icon">📂</div><p>Select a student to view their document submissions.</p></div>`;
-                return;
+                    item.addEventListener('click', () => selectStudent(s.id));
+                    studentList.appendChild(item);
+                });
             }
 
-            const initials = getInitials(student.name);
-            const { verified, total, hasRejected } = docSummary(student.docs);
-            const rejectedDocs = student.docs.filter(d => d.status === 'Rejected');
+            // ── Render Document Center ───────────────
+            function renderDocCenter() {
+                const student = students.find(s => s.id === selectedStudentId);
+                if (!student) {
+                    docCenter.innerHTML = `<div class="empty-state"><div class="empty-icon">📂</div><p>Select a student to view their document submissions.</p></div>`;
+                    return;
+                }
 
-            let notifHTML = '';
-            if (hasRejected) {
-                notifHTML = `
+                const initials = getInitials(student.name);
+                const { verified, total, hasRejected } = docSummary(student.docs);
+                const rejectedDocs = student.docs.filter(d => d.status === 'Rejected');
+
+                let notifHTML = '';
+                if (hasRejected) {
+                    notifHTML = `
                     <div class="notification-banner">
                         <span class="notif-icon">⚠️</span>
                         <span><strong>${rejectedDocs.length} document${rejectedDocs.length > 1 ? 's' : ''}</strong> rejected — awaiting student re-upload.</span>
                     </div>
                 `;
-            }
+                }
 
-            let cardsHTML = '';
-            student.docs.forEach((doc, idx) => {
-                const statusClass = doc.status.toLowerCase();
-                const isRejecting = rejectingDocIndex === idx;
+                let cardsHTML = '';
+                student.docs.forEach((doc, idx) => {
+                    const statusClass = doc.status.toLowerCase();
+                    const isRejecting = rejectingDocIndex === idx;
 
-                let rejectionHTML = '';
-                if (doc.status === 'Rejected' && doc.rejectionReason) {
-                    rejectionHTML = `
+                    let rejectionHTML = '';
+                    if (doc.status === 'Rejected' && doc.rejectionReason) {
+                        rejectionHTML = `
                         <div class="rejection-display">
                             <strong>Rejection Reason</strong>
                             ${doc.rejectionReason}
                         </div>
                     `;
-                }
+                    }
 
-                let actionsHTML = '';
-                if (doc.status === 'Pending') {
-                    actionsHTML = `
+                    let actionsHTML = '';
+                    if (doc.status === 'Pending') {
+                        actionsHTML = `
                         <div class="doc-actions">
                             <button class="btn btn-green" data-action="approve" data-idx="${idx}">
                                 <span class="btn-icon">✓</span> Approve
@@ -669,27 +1006,27 @@
                             </button>
                         </div>
                     `;
-                } else if (doc.status === 'Verified') {
-                    actionsHTML = `
+                    } else if (doc.status === 'Verified') {
+                        actionsHTML = `
                         <div class="doc-actions">
                             <button class="btn btn-outline-sm" disabled>
                                 <span class="btn-icon">✓</span> Verified
                             </button>
                         </div>
                     `;
-                } else if (doc.status === 'Rejected') {
-                    actionsHTML = `
+                    } else if (doc.status === 'Rejected') {
+                        actionsHTML = `
                         <div class="doc-actions">
                             <button class="btn btn-outline-sm" disabled>
                                 <span class="btn-icon">⏳</span> Awaiting Re-upload
                             </button>
                         </div>
                     `;
-                }
+                    }
 
-                let rejectFormHTML = '';
-                if (isRejecting) {
-                    rejectFormHTML = `
+                    let rejectFormHTML = '';
+                    if (isRejecting) {
+                        rejectFormHTML = `
                         <div class="reject-form" id="rejectForm-${idx}">
                             <label for="rejectReason-${idx}">Reason for Rejection</label>
                             <textarea id="rejectReason-${idx}" placeholder="e.g., Image is blurry, name mismatch, expired document…"></textarea>
@@ -701,9 +1038,9 @@
                             </div>
                         </div>
                     `;
-                }
+                    }
 
-                cardsHTML += `
+                    cardsHTML += `
                     <div class="doc-card">
                         <div class="doc-card-top">
                             <div class="doc-icon">${doc.icon}</div>
@@ -719,9 +1056,9 @@
                         ${rejectFormHTML}
                     </div>
                 `;
-            });
+                });
 
-            docCenter.innerHTML = `
+                docCenter.innerHTML = `
                 <div class="doc-center-header">
                     <div class="doc-avatar">${initials}</div>
                     <div class="meta">
@@ -737,90 +1074,91 @@
                 </div>
             `;
 
-            // Wire up action buttons
-            docCenter.querySelectorAll('[data-action]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const idx = parseInt(btn.dataset.idx);
-                    handleDocAction(btn.dataset.action, student, idx);
+                // Wire up action buttons
+                docCenter.querySelectorAll('[data-action]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const idx = parseInt(btn.dataset.idx);
+                        handleDocAction(btn.dataset.action, student, idx);
+                    });
                 });
-            });
-        }
-
-        // ── Actions ──────────────────────────────
-        function handleDocAction(action, student, idx) {
-            const doc = student.docs[idx];
-
-            switch (action) {
-                case 'approve':
-                    doc.status = 'Verified';
-                    showToast(`✓ ${doc.type} approved for ${student.name}`);
-                    rejectingDocIndex = null;
-                    renderDocCenter();
-                    renderStudentList();
-                    break;
-
-                case 'reject-start':
-                    rejectingDocIndex = idx;
-                    renderDocCenter();
-                    // Focus the textarea after render
-                    setTimeout(() => {
-                        const textarea = document.getElementById(`rejectReason-${idx}`);
-                        if (textarea) textarea.focus();
-                    }, 100);
-                    break;
-
-                case 'reject-cancel':
-                    rejectingDocIndex = null;
-                    renderDocCenter();
-                    break;
-
-                case 'reject-confirm':
-                    const textarea = document.getElementById(`rejectReason-${idx}`);
-                    const reason = textarea ? textarea.value.trim() : '';
-                    if (!reason) {
-                        textarea.style.borderColor = 'var(--red-danger)';
-                        textarea.setAttribute('placeholder', 'A reason is required before rejecting.');
-                        textarea.focus();
-                        return;
-                    }
-                    doc.status = 'Rejected';
-                    doc.rejectionReason = reason;
-                    rejectingDocIndex = null;
-                    showToast(`⚠️ ${doc.type} rejected — notification sent to ${student.name}`, 'warn');
-                    renderDocCenter();
-                    renderStudentList();
-                    break;
             }
-        }
 
-        // ── Select Student ───────────────────────
-        function selectStudent(id) {
-            selectedStudentId = id;
-            rejectingDocIndex = null;
-            renderStudentList();
-            renderDocCenter();
-        }
+            // ── Actions ──────────────────────────────
+            function handleDocAction(action, student, idx) {
+                const doc = student.docs[idx];
 
-        // ── Search ───────────────────────────────
-        document.getElementById('studentSearch').addEventListener('input', (e) => {
-            searchQuery = e.target.value.trim();
+                switch (action) {
+                    case 'approve':
+                        doc.status = 'Verified';
+                        showToast(`✓ ${doc.type} approved for ${student.name}`);
+                        rejectingDocIndex = null;
+                        renderDocCenter();
+                        renderStudentList();
+                        break;
+
+                    case 'reject-start':
+                        rejectingDocIndex = idx;
+                        renderDocCenter();
+                        // Focus the textarea after render
+                        setTimeout(() => {
+                            const textarea = document.getElementById(`rejectReason-${idx}`);
+                            if (textarea) textarea.focus();
+                        }, 100);
+                        break;
+
+                    case 'reject-cancel':
+                        rejectingDocIndex = null;
+                        renderDocCenter();
+                        break;
+
+                    case 'reject-confirm':
+                        const textarea = document.getElementById(`rejectReason-${idx}`);
+                        const reason = textarea ? textarea.value.trim() : '';
+                        if (!reason) {
+                            textarea.style.borderColor = 'var(--red-danger)';
+                            textarea.setAttribute('placeholder', 'A reason is required before rejecting.');
+                            textarea.focus();
+                            return;
+                        }
+                        doc.status = 'Rejected';
+                        doc.rejectionReason = reason;
+                        rejectingDocIndex = null;
+                        showToast(`⚠️ ${doc.type} rejected — notification sent to ${student.name}`, 'warn');
+                        renderDocCenter();
+                        renderStudentList();
+                        break;
+                }
+            }
+
+            // ── Select Student ───────────────────────
+            function selectStudent(id) {
+                selectedStudentId = id;
+                rejectingDocIndex = null;
+                renderStudentList();
+                renderDocCenter();
+            }
+
+            // ── Search ───────────────────────────────
+            document.getElementById('studentSearch').addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim();
+                renderStudentList();
+            });
+
+            // ── Toast ────────────────────────────────
+            function showToast(message, type = 'default') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = 'toast' + (type === 'warn' ? ' warn' : '');
+                toast.textContent = message;
+                container.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+            // ── Init ─────────────────────────────────
             renderStudentList();
         });
-
-        // ── Toast ────────────────────────────────
-        function showToast(message, type = 'default') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast' + (type === 'warn' ? ' warn' : '');
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // ── Init ─────────────────────────────────
-        renderStudentList();
-    });
     </script>
 </body>
+
 </html>

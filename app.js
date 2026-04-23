@@ -102,12 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─────────────────────────────────────────────
-    //  Counselor Dashboard – Lead Management State
+    //  counsellor Dashboard – Lead Management State
     // ─────────────────────────────────────────────
     const leadListBody = document.getElementById('leadListBody');
 
     if (leadListBody) {
-        const avatarColors = ['#1B4332','#2d6a4f','#40916c','#D4AF37','#a68a2a','#4B0082'];
+        const avatarColors = ['#1B4332', '#2d6a4f', '#40916c', '#D4AF37', '#a68a2a', '#4B0082'];
 
         const leads = [
             {

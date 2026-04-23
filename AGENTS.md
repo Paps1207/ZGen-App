@@ -29,7 +29,7 @@
 | Archetype | Primary Visibility | Key Verbs (Actions) |
 | :--- | :--- | :--- |
 | **Super Admin** | Global Reports, Role Management | [cite_start]Create/Assign Roles, Audit History, Re-assign Students[cite: 319, 322, 326, 332]. |
-| **Counselor** | Lead Funnel & Academic Profile | [cite_start]Manage Leads, Verify Identity, Flag Issues, Push to Consultant[cite: 111, 112, 113]. |
+| **counsellor** | Lead Funnel & Academic Profile | [cite_start]Manage Leads, Verify Identity, Flag Issues, Push to Consultant[cite: 111, 112, 113]. |
 | **Consultant** | Full Student Journey & Verification | [cite_start]Assess Fitment, Trigger Services, Request Manager Sponsorship[cite: 167, 171, 173]. |
 | **App Associate** | Application Stages & Checklists | [cite_start]Update Stage, Assign Associate, Override Status, Move to Done[cite: 23, 25, 26]. |
 | **Content Writer** | SOP/LOR & Portfolio Segments | [cite_start]Update Profile, Upload/Edit Drafts, Complete Training[cite: 60, 61, 64]. |
