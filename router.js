@@ -20,8 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.location.href = "admin.html";
                     break;
                 case "counselor":
-                    // Updated path to the sub-directory
-                    window.location.href = "counselor/counselor.html";
+                    window.location.href = "counselor.html";
                     break;
                 case "consultant":
                 case "app_associate":
