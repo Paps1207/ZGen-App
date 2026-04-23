@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Super Admin': {
             core: 'active', academic: 'active', sop: 'active', application: 'active', lrt: 'active'
         },
-        'Counsellor': {
+        'counselor': {
             core: 'active', academic: 'blurred', sop: 'blurred', application: 'hidden', lrt: 'hidden'
         },
         'Consultant': {
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─────────────────────────────────────────────
-    //  counsellor Dashboard – Lead Management State
+    //  counselor Dashboard – Lead Management State
     // ─────────────────────────────────────────────
     const leadListBody = document.getElementById('leadListBody');
 
